@@ -6,9 +6,9 @@ const payOut = async(req,res)=>{
 
     try {
         
-        const { type , amount} = req.body;
+        const { type , description,amount} = req.body;
 
-        const payout = new payOutModel({type,amount});
+        const payout = new payOutModel({type,description,amount});
         const result = await payout.save();
         
         res.json({data:"added successfully"})

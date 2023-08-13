@@ -20,6 +20,10 @@ const empSchema = new Schema(
             match: [/^\d{10}$/, 'Invalid mobile number. Please enter a 10-digit number.']
 
         },
+        dob:{
+            type:Date,
+            required:true
+        },
         email:{
             type:String,
             required:true,

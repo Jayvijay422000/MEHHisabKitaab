@@ -34,15 +34,24 @@ const getEmpByField = require("./modules/employee/getEmpByField");
 const getAllEmp = require("./modules/employee/getAllEmp");
 const updateEmp = require('./modules/employee/updateEmp');
 
+
+//students
+
+const addStudent = require("./modules/students/addStud");
+const getAllStud =require("./modules/students/getAllStud");
+const getStudByField = require('./modules/students/getStudByField');
+
 //parses the text as url encoded data
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(bodyParser.json());
 
 
-app.get("/",(req,res)=>{
-    res.send("hello");
-});
+//student routes
+
+app.post("/Students",addStudent);
+app.get("/Students",getAllStud);
+app.get("/searchStudents",getStudByField);
 
 //courses routes
 app.post("/Courses",addCourses);

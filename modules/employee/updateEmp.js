@@ -10,7 +10,7 @@ const updateEmp= async(req,res)=>{
             const updateUser = await empmodel.findOneAndUpdate(
                 { mobile_number:req.body['mobile_number'],active:true},
                 { $set: req.body }, // Dynamically set all fields from req.body
-                { new: true }
+                { new: true } //if true then it returns the updated data
               );
             if(!updateUser){
                 res.send("no such user exists");
