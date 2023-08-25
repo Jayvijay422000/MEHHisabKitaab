@@ -40,7 +40,8 @@ const updateEmp = require('./modules/employee/updateEmp');
 const addStudent = require("./modules/students/addStud");
 const getAllStud =require("./modules/students/getAllStud");
 const getStudByField = require('./modules/students/getStudByField');
-
+const addFees=require('./modules/students/addFees');
+const updateStud = require('./modules/students/updateStud');
 //parses the text as url encoded data
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -52,6 +53,8 @@ app.use(bodyParser.json());
 app.post("/Students",addStudent);
 app.get("/Students",getAllStud);
 app.get("/searchStudents",getStudByField);
+app.patch("/fees",addFees);
+app.patch("/Students",updateStud);
 
 //courses routes
 app.post("/Courses",addCourses);
@@ -88,6 +91,6 @@ app.get("/payOut",getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",getPayOutBtnDate);
 
-app.listen(8080,()=>{
+app.listen(8000,()=>{
  console.log("connected");
 });

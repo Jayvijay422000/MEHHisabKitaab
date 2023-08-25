@@ -9,9 +9,13 @@ const addStud = async(req,res)=>{
 
             const {fullName,MobileNumber,email,address,qualification,dob,pincode,personalDoc,courseName,totalFees,DOA} =req.body;
 
+            const existsStud = await studmodel.findOne({email:email});
+
+            if(existsStud){
+
+                res.send("student with email already exists")
+            }else{
             const course_id = await coursesModel.findOne({course_name:courseName});
-            
-           
             if(course_id){
 
                 const courseDetails={
@@ -26,7 +30,7 @@ const addStud = async(req,res)=>{
             }else{
                 res.send("No valid course ")
             }
-            
+        }
         }catch(error){
             res.status(500).json({error:error.message})
         }
