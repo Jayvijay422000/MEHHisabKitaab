@@ -4,6 +4,14 @@ const app = express();
 
 
 require("./db");
+
+
+//parses the text as url encoded data
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.json());
+
+
 //modules
 
 //courses
@@ -42,13 +50,22 @@ const getAllStud =require("./modules/students/getAllStud");
 const getStudByField = require('./modules/students/getStudByField');
 const addFees=require('./modules/students/addFees');
 const updateStud = require('./modules/students/updateStud');
-//parses the text as url encoded data
-app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(bodyParser.json());
+//fees
+
+const courseWiseFees = require("./modules/fees/courseWiseFees");
+const dateWiseFees = require('./modules/fees/dateWiseFees');
 
 
-//student routes
+
+
+/**************** fees routes ****************/
+
+app.get("/feesByCourse",courseWiseFees);
+app.get("/feesByDate",dateWiseFees)
+
+
+/**************** student routes ****************/
 
 app.post("/Students",addStudent);
 app.get("/Students",getAllStud);
@@ -56,7 +73,7 @@ app.get("/searchStudents",getStudByField);
 app.patch("/fees",addFees);
 app.patch("/Students",updateStud);
 
-//courses routes
+/**************** courses routes ****************/
 app.post("/Courses",addCourses);
 
 app.get("/Courses",getAllCourses);
@@ -64,7 +81,7 @@ app.get("/Courses",getAllCourses);
 app.get("/Course/:id",getByIdCourses);
 
 
-//employees routes
+/**************** employees ****************/
 
 app.post("/employee",addEmployee);
 
@@ -75,21 +92,29 @@ app.get("/employee",getAllEmp);
 app.patch("/employee",updateEmp);
 
 app.patch("/salary",addSalary);
-//Accounts 
 
-//payIn
+
+/**************** Accounts ****************/
+
+/****************payIn****************/
+
 app.post("/payIn",addPayIn);
 app.get("/payIn",getAllPayIn);
 //between to date
 app.get("/payInBtnDate",getPayInBtnDate);
 
 
-//payOut
+/****************payOut****************/
 
 app.post("/payOut",addPayOut);
 app.get("/payOut",getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",getPayOutBtnDate);
+
+
+
+
+
 
 app.listen(8000,()=>{
  console.log("connected");
