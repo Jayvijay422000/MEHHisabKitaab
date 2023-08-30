@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 
 const userSchema = new Schema({
-
     active:{
         type:Boolean,
         default:true
@@ -22,9 +21,9 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
-    typeofuser:{
+    role:{
         type:String,
-        required:true
+        enum:["staff","admin","student"]
     },
     mobile_number:{
         type:String,
@@ -33,7 +32,8 @@ const userSchema = new Schema({
 
     }
 
-},{collection:"userlogin"})
+
+},{collection:"userlogin",timestamps:true})
 
 
 const userModel = mongoose.model("usermodel",userSchema)

@@ -14,6 +14,10 @@ app.use(bodyParser.json());
 
 //modules
 
+//user login singup
+
+const registerUser = require("./modules/user/registerUser");
+
 //courses
 const addCourses = require("./modules/courses/addCourses");
 const getAllCourses= require("./modules/courses/getAllCourses");
@@ -59,6 +63,7 @@ const dateWiseFees = require('./modules/fees/dateWiseFees');
 
 
 
+
 /**************** fees routes ****************/
 
 app.get("/feesByCourse",courseWiseFees);
@@ -75,26 +80,20 @@ app.patch("/Students",updateStud);
 
 /**************** courses routes ****************/
 app.post("/Courses",addCourses);
-
 app.get("/Courses",getAllCourses);
-
 app.get("/Course/:id",getByIdCourses);
 
 
 /**************** employees ****************/
 
 app.post("/employee",addEmployee);
-
 app.get("/searchemp",getEmpByField);
-
 app.get("/employee",getAllEmp);
-
 app.patch("/employee",updateEmp);
-
 app.patch("/salary",addSalary);
 
 
-/**************** Accounts ****************/
+                                        /**************** Accounts ****************/
 
 /****************payIn****************/
 
@@ -111,8 +110,20 @@ app.get("/payOut",getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",getPayOutBtnDate);
 
+                                        /**************** User ****************/
+
+/****************Register User****************/
 
 
+/*
+
+app.post("/register-se", (req, res) => {
+  employeeSignup(req.body, "se", res);
+});
+*/
+
+
+app.post("/user",registerUser);
 
 
 
