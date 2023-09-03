@@ -14,11 +14,12 @@ const bcrypt = require('bcrypt');
 
 
 //add field in every table  created_at created_by , updated_at,updated_by 
-const registerUser= async(req,res)=>{
+const registerUser= async(req,res,role)=>{
 
+   // console.log(role);
     try {
-        const {email,mobile_number,password,role} = req.body;
-
+        const {email,mobile_number,password} = req.body;
+        role="staff"
         //check if user with same email or mobile exists
 
         const validateUserEmailAndMobile =async(userEmail,Mobile)=>{
@@ -52,7 +53,8 @@ const registerUser= async(req,res)=>{
                     uid:uid,
                     password:hashpassword,
                     role:role,
-                    mobile_number:mobile_number
+                    mobile_number:mobile_number,
+                    created_by:req.userId
                 });
                 await user.save();
                 res.send("user added successfully ")

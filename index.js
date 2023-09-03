@@ -17,7 +17,9 @@ app.use(bodyParser.json());
 //user login singup
 
 const registerUser = require("./modules/user/registerUser");
+const loginUser = require('./modules/user/loginUser');
 
+ 
 //courses
 const addCourses = require("./modules/courses/addCourses");
 const getAllCourses= require("./modules/courses/getAllCourses");
@@ -59,56 +61,94 @@ const updateStud = require('./modules/students/updateStud');
 
 const courseWiseFees = require("./modules/fees/courseWiseFees");
 const dateWiseFees = require('./modules/fees/dateWiseFees');
+const userModel = require('./models/user/userSchema');
 
 
 
+// Middleware for verifying JWT tokens
+
+
+function verifyToken(req,res,next){
+  const token =req.headers['authorization'];
+
+  if(!token){
+    return res.status(403).json({error:'No token Provided'});
+
+  }
+
+  JsonWebTokenError.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
+      if(err){
+          return res.status(401).json({error:'Failed to authenticate token'})
+      }
+
+      req.userId = decoded.id;
+      next();
+  });
+}
+
+// Middleware for role-based authorization
+
+function checkRole(role) {
+  
+  return async (req,res,next)=>{
+    await userModel.findById(req.userId,(err,user)=>{
+
+      if(err || !user || !role.includes(user.role)){
+        return res.status(403).json({error:"Access Denied"});
+      }
+
+      next();
+
+    });
+  }
+}
 
 
 /**************** fees routes ****************/
 
-app.get("/feesByCourse",courseWiseFees);
-app.get("/feesByDate",dateWiseFees)
+app.get("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
+app.get("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
 
 
 /**************** student routes ****************/
 
-app.post("/Students",addStudent);
-app.get("/Students",getAllStud);
-app.get("/searchStudents",getStudByField);
-app.patch("/fees",addFees);
-app.patch("/Students",updateStud);
+app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
+app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
+app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
+app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
+app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 
 /**************** courses routes ****************/
-app.post("/Courses",addCourses);
-app.get("/Courses",getAllCourses);
-app.get("/Course/:id",getByIdCourses);
+app.post("/courses",verifyToken, checkRole(['admin']),addCourses);
+app.get("/courses",verifyToken, checkRole(['admin']),getAllCourses);
+app.get("/course/:id",verifyToken, checkRole(['admin']),getByIdCourses);
 
 
 /**************** employees ****************/
 
-app.post("/employee",addEmployee);
-app.get("/searchemp",getEmpByField);
-app.get("/employee",getAllEmp);
-app.patch("/employee",updateEmp);
-app.patch("/salary",addSalary);
+app.post("/employee",verifyToken, checkRole(['admin']),addEmployee);
+app.get("/searchemp",verifyToken, checkRole(['admin']),getEmpByField);
+app.get("/employee",verifyToken, checkRole(['admin']),getAllEmp);
+app.patch("/employee",verifyToken, checkRole(['admin']),updateEmp);
+app.patch("/salary",verifyToken, checkRole(['admin']),addSalary);
 
 
                                         /**************** Accounts ****************/
 
 /****************payIn****************/
 
-app.post("/payIn",addPayIn);
-app.get("/payIn",getAllPayIn);
+app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
+app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
-app.get("/payInBtnDate",getPayInBtnDate);
+app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);
 
 
 /****************payOut****************/
 
-app.post("/payOut",addPayOut);
-app.get("/payOut",getAllPayOut);
+app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
+app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
 //between to date
-app.get("/payOutBtnDate",getPayOutBtnDate);
+app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
 
                                         /**************** User ****************/
 
@@ -123,9 +163,22 @@ app.post("/register-se", (req, res) => {
 */
 
 
-app.post("/user",registerUser);
+app.post("/user",verifyToken, checkRole(['admin','staff']),(req,res)=>{
+  const role ="student";
+  registerUser(req,res,role);
+});
 
+app.post("/staff",verifyToken, checkRole(['admin']),(req,res)=>{
+   const role ="staff";
+   registerUser(req,res,role);
+});
 
+app.post("/admin",verifyToken, checkRole(['superadmin']),(req,res)=>{
+  const role ="admin";
+  registerUser(req,res,role);
+});
+
+app.post("/login",loginUser);
 
 app.listen(8000,()=>{
  console.log("connected");

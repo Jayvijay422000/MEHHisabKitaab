@@ -30,7 +30,17 @@ const userSchema = new Schema({
         required:true,
         match: [/^\d{10}$/, 'Invalid mobile number. Please enter a 10-digit number.']
 
-    }
+    },
+    
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usermodel', // Reference to the User model (or whichever model represents your users)
+      },
+    updated_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usermodel',
+      }
+
 
 
 },{collection:"userlogin",timestamps:true})

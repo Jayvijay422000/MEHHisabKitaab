@@ -5,7 +5,7 @@ const updateStud= async(req,res)=>{
         try {
            
             const updateUser = await studmodel.findOneAndUpdate(
-                { mobile_number:req.body['mobile_number'],_id:req.body['studId'],active:true},
+                { mobile_number:req.body['mobile_number'],_id:req.body['studId'],active:true,updated_by:req.userId},
                 { $set:req.body}, // Dynamically set all fields from req.body
                 { new: true }
               );

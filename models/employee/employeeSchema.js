@@ -60,11 +60,21 @@ const empSchema = new Schema(
               },
               _id: false 
             }
-          ]
+          ],
+    
+          created_by: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'usermodel', // Reference to the User model (or whichever model represents your users)
+            },
+          updated_by: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'usermodel',
+            }
+      
           // or => salary : { type : Array , "default" : [] }
 
     },
-    {collection:"employees"})
+    {collection:"employees",timestamps:true})
 
     const empmodel = mongoose.model("empmodel",empSchema);
 

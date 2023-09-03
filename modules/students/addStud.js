@@ -23,7 +23,7 @@ const addStud = async(req,res)=>{
                     total_fees:totalFees,
                     DOA:DOA
                 }
-                const stud = new studmodel({full_name:fullName,mobile_number:[MobileNumber],email:email,address:address,qualification:qualification,dob:dob,pincode:pincode,personal_doc:personalDoc,course_details:[courseDetails]})
+                const stud = new studmodel({full_name:fullName,mobile_number:[MobileNumber],email:email,address:address,qualification:qualification,dob:dob,pincode:pincode,personal_doc:personalDoc,course_details:[courseDetails],created_by:req.userId})
                 await stud.save()
 
                 res.send("student added")
