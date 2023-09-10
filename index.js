@@ -2,7 +2,7 @@ const express =require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-
+const jwt = require('jsonwebtoken');
 require("./db");
 
 
@@ -76,7 +76,7 @@ function verifyToken(req,res,next){
 
   }
 
-  JsonWebTokenError.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
+  jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
       if(err){
           return res.status(401).json({error:'Failed to authenticate token'})
       }
@@ -104,6 +104,38 @@ function checkRole(role) {
 }
 
 
+
+
+// Set up multer for image upload
+
+const multer = require('multer');
+
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'upload/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    },
+  });
+
+const upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 1024 * 1024 * 1, // 2 MB (adjust as needed)
+    },
+    fileFilter: (req, file, cb) => {
+      // Check file types (e.g., allow only images)
+      if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error('Only image files are allowed.'), false);
+      }
+      cb(null, true);
+    },
+  });
+
+
 /**************** fees routes ****************/
 
 app.get("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
@@ -112,7 +144,7 @@ app.get("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
 
 /**************** student routes ****************/
 
-app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
+app.post("/students",upload.array('images', 2),addStudent);
 app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
 app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
@@ -155,13 +187,6 @@ app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
 /****************Register User****************/
 
 
-/*
-
-app.post("/register-se", (req, res) => {
-  employeeSignup(req.body, "se", res);
-});
-*/
-
 
 app.post("/user",verifyToken, checkRole(['admin','staff']),(req,res)=>{
   const role ="student";
@@ -172,6 +197,8 @@ app.post("/staff",verifyToken, checkRole(['admin']),(req,res)=>{
    const role ="staff";
    registerUser(req,res,role);
 });
+
+//app.post("/staff",registerUser);
 
 app.post("/admin",verifyToken, checkRole(['superadmin']),(req,res)=>{
   const role ="admin";

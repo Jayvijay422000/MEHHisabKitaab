@@ -8,8 +8,8 @@ const userModel = require("../../models/user/userSchema");
 const empmodel = require("../../models/employee/employeeSchema");
 
 const bcrypt = require('bcrypt');
-//only super user and register admin
-//only super user and admin can register staff
+//only super user can register admin
+//only super user can admin can register staff
 //image upload
 
 
