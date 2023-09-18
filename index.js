@@ -2,7 +2,7 @@ const express =require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-
+const jwt = require('jsonwebtoken');
 require("./db");
 
 
@@ -76,7 +76,7 @@ function verifyToken(req,res,next){
 
   }
 
-  JsonWebTokenError.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
+  jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
       if(err){
           return res.status(401).json({error:'Failed to authenticate token'})
       }
@@ -91,17 +91,18 @@ function verifyToken(req,res,next){
 function checkRole(role) {
   
   return async (req,res,next)=>{
-    await userModel.findById(req.userId,(err,user)=>{
-
-      if(err || !user || !role.includes(user.role)){
+   const user=  await userModel.findById(req.userId);
+      if(!user || !role.includes(user.role)){
         return res.status(403).json({error:"Access Denied"});
       }
-
       next();
-
-    });
+   
   }
 }
+
+
+
+
 
 
 /**************** fees routes ****************/
@@ -155,13 +156,6 @@ app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
 /****************Register User****************/
 
 
-/*
-
-app.post("/register-se", (req, res) => {
-  employeeSignup(req.body, "se", res);
-});
-*/
-
 
 app.post("/user",verifyToken, checkRole(['admin','staff']),(req,res)=>{
   const role ="student";
@@ -172,6 +166,8 @@ app.post("/staff",verifyToken, checkRole(['admin']),(req,res)=>{
    const role ="staff";
    registerUser(req,res,role);
 });
+
+//app.post("/staff",registerUser);
 
 app.post("/admin",verifyToken, checkRole(['superadmin']),(req,res)=>{
   const role ="admin";

@@ -19,7 +19,7 @@ const registerUser= async(req,res,role)=>{
    // console.log(role);
     try {
         const {email,mobile_number,password} = req.body;
-        role="staff"
+        
         //check if user with same email or mobile exists
 
         const validateUserEmailAndMobile =async(userEmail,Mobile)=>{
@@ -35,7 +35,7 @@ const registerUser= async(req,res,role)=>{
         }else{
 
             var uid= await empmodel.findOne({"email":email,"mobile_number":mobile_number,"active":true}).select("_id");
-
+            console.log(uid)
         }
 
         //get user id from employee table

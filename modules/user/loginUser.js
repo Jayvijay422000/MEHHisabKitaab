@@ -14,18 +14,19 @@ const loginUser= async(req,res)=>{
 
         const { email,password}= req.body;
 
-        userModel.findOne({"email":email},(err,user)=>{
-            if(err || !user || !comparePassword(password,user.password)){
+       const user =await  userModel.findOne({"email":email});
+
+            if( !user || !comparePassword(password,user.password)){
                 return res.status(401).json({message:'Authentication failed'});
             }
 
 
-            const token = jwt.sign({id:user._id},process.env.SECRET_KEY,{
+            const token = jwt.sign({id:user._id,role:user.role},process.env.SECRET_KEY,{
                 expiresIn:86400, //24 hrs
             });
-
-            res.json({token});
-        });
+        
+            res.json({token:token,role:user.role});
+        
 
         
     } catch (error) {
