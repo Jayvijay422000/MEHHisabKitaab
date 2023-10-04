@@ -101,7 +101,6 @@ function checkRole(role) {
 app.post("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
 app.post("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
 
-
 /**************** student routes ****************/
 
 app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
