@@ -98,8 +98,9 @@ function checkRole(role) {
 
 /**************** fees routes ****************/
 
-app.post("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
-app.post("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
+app.get("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
+app.get("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
+
 
 /**************** student routes ****************/
 
