@@ -24,11 +24,11 @@ const addFees= async(req,res)=>{
                 { new: true }
               );
             if(!updateStud){
-                res.send("no such user exists");
+                res.status(404).send("no such user exists");
             }else{
                 const description = "Installment of "+newFees['amount']+" ₹ paid by "+updateStud["full_name"]+" \n Mobile Number  "+updateStud["mobile_number"][0];
                 payInEmitter.emit('addFees',description, newFees['amount']);
-                res.status(500).send(updateStud);
+                res.status(201).send(updateStud);
             }
             
         } catch (error) {

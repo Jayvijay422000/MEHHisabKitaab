@@ -10,9 +10,9 @@ const updateStud= async(req,res)=>{
                 { new: true }
               );
               if(!updateUser){
-                res.send("no such user exists");
+                res.status(404).send("no such user exists");
             }else{
-                res.status(500).send(updateUser);
+                res.status(201).send(updateUser);
             }
             
             

@@ -12,7 +12,7 @@ const getAllStud = async(req,res)=>{
         if(!stud){
             res.status(404).json({error:"No data"})
         }else{
-            res.send(stud);
+            res.status(200).send(stud);
         }
 
 

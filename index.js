@@ -1,6 +1,8 @@
 const express =require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
 const jwt = require('jsonwebtoken');
 require("./db");
@@ -19,12 +21,10 @@ app.use(bodyParser.json());
 const registerUser = require("./modules/user/registerUser");
 const loginUser = require('./modules/user/loginUser');
 
- 
 //courses
 const addCourses = require("./modules/courses/addCourses");
 const getAllCourses= require("./modules/courses/getAllCourses");
 const getByIdCourses =require("./modules/courses/getByIdCourses");
-
 
 //accounts
 
@@ -48,7 +48,6 @@ const getEmpByField = require("./modules/employee/getEmpByField");
 const getAllEmp = require("./modules/employee/getAllEmp");
 const updateEmp = require('./modules/employee/updateEmp');
 
-
 //students
 
 const addStudent = require("./modules/students/addStud");
@@ -63,10 +62,7 @@ const courseWiseFees = require("./modules/fees/courseWiseFees");
 const dateWiseFees = require('./modules/fees/dateWiseFees');
 const userModel = require('./models/user/userSchema');
 
-
-
 // Middleware for verifying JWT tokens
-
 
 function verifyToken(req,res,next){
   const token =req.headers['authorization'];
@@ -80,7 +76,6 @@ function verifyToken(req,res,next){
       if(err){
           return res.status(401).json({error:'Failed to authenticate token'})
       }
-
       req.userId = decoded.id;
       next();
   });
@@ -101,15 +96,10 @@ function checkRole(role) {
 }
 
 
-
-
-
-
 /**************** fees routes ****************/
 
 app.get("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
 app.get("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
-
 
 /**************** student routes ****************/
 
@@ -134,7 +124,7 @@ app.patch("/employee",verifyToken, checkRole(['admin']),updateEmp);
 app.patch("/salary",verifyToken, checkRole(['admin']),addSalary);
 
 
-                                        /**************** Accounts ****************/
+ /**************** Accounts ****************/
 
 /****************payIn****************/
 
@@ -151,7 +141,7 @@ app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
 
-                                        /**************** User ****************/
+/**************** User ****************/
 
 /****************Register User****************/
 

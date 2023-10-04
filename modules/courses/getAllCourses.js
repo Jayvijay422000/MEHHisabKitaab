@@ -9,7 +9,7 @@ try{
    if(!data){
     res.status(404).json({error:"No data"})
    }else{
-    res.send(data);
+    res.status(200).send(data);
    }
    
 }catch(err){

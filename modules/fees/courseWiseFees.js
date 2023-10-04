@@ -53,7 +53,7 @@ const courseWiseFees = async(req,res)=>{
                 res.status(404).json({error:"No data"})
                 
             }else{
-                    res.send(feesList);
+                    res.status(200).send(feesList);
                 }
         }else{
             res.status(404).json({error:"No such Course"})

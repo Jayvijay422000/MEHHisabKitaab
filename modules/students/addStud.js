@@ -13,7 +13,7 @@ const addStud = async(req,res)=>{
 
             if(existsStud){
 
-                res.send("student with email already exists")
+                res.status(403).send("student with email already exists")
             }else{
             const course_id = await coursesModel.findOne({course_name:courseName});
             if(course_id){
@@ -26,9 +26,9 @@ const addStud = async(req,res)=>{
                 const stud = new studmodel({full_name:fullName,mobile_number:[MobileNumber],email:email,address:address,qualification:qualification,dob:dob,pincode:pincode,personal_doc:personalDoc,course_details:[courseDetails],created_by:req.userId})
                 await stud.save()
 
-                res.send("student added")
+                res.status(201).send(stud)
             }else{
-                res.send("No valid course ")
+                res.status(404).send("No valid course ")
             }
         }
         }catch(error){

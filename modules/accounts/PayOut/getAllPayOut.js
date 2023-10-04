@@ -8,7 +8,7 @@ const getAllPayOut = async(req,res)=>{
         if(!result){
             res.status(404).json({error:"no data found"})
         }else{
-            res.send(result);
+            res.status(200).send(result);
         }
 
     } catch (error) {

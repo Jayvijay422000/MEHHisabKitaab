@@ -8,7 +8,10 @@ const Schema = mongoose.Schema;
 
 const CourseSchema = new Schema({
    
-    course_name : String,
+    course_name :{
+      type:String,
+      required:true
+    } ,
     total_fees: Number,
     
     created_by: {

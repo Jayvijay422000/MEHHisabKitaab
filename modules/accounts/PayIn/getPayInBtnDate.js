@@ -13,7 +13,7 @@ const getPayInBtnDate = async(req,res)=>{
                 $lte: new Date(endDate)
             }
         });
-        res.send(result);
+        res.status(200).send(result);
 
     } catch (error) {
         res.status(500).json({error:error.message})

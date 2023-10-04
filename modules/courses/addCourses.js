@@ -7,10 +7,10 @@ const addCourses = async(req,res)=>{
         const course = new coursesModel({course_name,total_fees,created_by:req.userId});
 
         await course.save();
-
-        res.send("Added");
+         
+        res.status(201).send(course);
     }catch(err){
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:err.message})
     }
 }
 

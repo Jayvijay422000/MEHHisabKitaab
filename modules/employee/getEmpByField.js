@@ -15,7 +15,7 @@ const getEmpByField = async(req,res)=>{
             if(!emp){
                 res.status(404).json({error:"No data"})
             }else{
-                res.send(emp);
+                res.status(200).send(emp);
             }
     
 

@@ -11,7 +11,7 @@ try {
     if(!course){
         res.status(404).json(course)
     }else{
-        res.json(course);
+        res.status(200).json(course);
     }
     
     
