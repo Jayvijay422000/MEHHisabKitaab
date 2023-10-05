@@ -5,7 +5,7 @@ const updateEmp= async(req,res)=>{
 
         try {
             const updateUser = await empmodel.findOneAndUpdate(
-                { mobile_number:req.body['mobile_number'],active:true},
+                { mobile_number:req.body['mobile_number'],_id:req.body['empId'],active:true},
                 { $set: req.body ,updated_by:req.userId}, // Dynamically set all fields from req.body
                 { new: true } //if true then it returns the updated data
               );
