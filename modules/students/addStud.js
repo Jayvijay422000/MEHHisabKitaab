@@ -20,6 +20,7 @@ const addStud = async(req,res)=>{
 
                 const courseDetails={
                     course_id:course_id['_id'],
+                    course_name:courseName,
                     total_fees:totalFees,
                     DOA:DOA
                 }

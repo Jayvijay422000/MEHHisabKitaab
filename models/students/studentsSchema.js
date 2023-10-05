@@ -60,6 +60,10 @@ const studSchema = new Schema({
             type:Schema.Types.ObjectId ,
             ref:'coursesModel'
         },
+        course_name:{
+            type:String,
+            required:true
+        },
         total_fees:{
             type:Number,
             min:0
