@@ -7,7 +7,7 @@ const addStud = async(req,res)=>{
 
         try{
 
-            const {fullName,MobileNumber,email,address,qualification,dob,pincode,personalDoc,courseName,totalFees,DOA} =req.body;
+            const {fullName,mobileNumber,email,address,qualification,dob,pincode,personalDoc,courseName,totalFees,DOA} =req.body;
 
             const existsStud = await studmodel.findOne({email:email});
 
@@ -24,7 +24,7 @@ const addStud = async(req,res)=>{
                     total_fees:totalFees,
                     DOA:DOA
                 }
-                const stud = new studmodel({full_name:fullName,mobile_number:[MobileNumber],email:email,address:address,qualification:qualification,dob:dob,pincode:pincode,personal_doc:personalDoc,course_details:[courseDetails],created_by:req.userId})
+                const stud = new studmodel({full_name:fullName,mobile_number:[mobileNumber],email:email,address:address,qualification:qualification,dob:dob,pincode:pincode,personal_doc:personalDoc,course_details:[courseDetails],created_by:req.userId})
                 await stud.save()
 
                 res.status(201).send(stud)
