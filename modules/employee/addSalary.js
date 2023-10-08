@@ -17,8 +17,8 @@ const addSalary= async(req,res)=>{
         try {
             const {newSalary}=req.body;
             const updateUser = await empmodel.findOneAndUpdate(
-                { mobile_number:req.body['mobile_number'],active:true},
-                { $push: {salary:newSalary,updated_by:req.userId}}, // Dynamically set all fields from req.body
+                { mobile_number:req.body['mobile_number'],active:true,updated_by:req.userId},
+                { $push: {salary:newSalary}}, // Dynamically set all fields from req.body
                 { new: true }
               );
             if(!updateUser){
