@@ -19,8 +19,8 @@ const addFees= async(req,res)=>{
         try {
             const {newFees}=req.body;
             const updateStud = await studmodel.findOneAndUpdate(
-                { mobile_number:req.body['mobile_number'],_id:req.body['studId'],active:true,updated_by:req.userId},
-                { $push: {"course_details.$.fees_installments":newFees}}, // Dynamically set all fields from req.body
+                { mobile_number:req.body['mobile_number'],_id:req.body['studId'],active:true},
+                { $push: {"course_details.$.fees_installments":newFees,updated_by:req.userId }}, // Dynamically set all fields from req.body
                 { new: true }
               );
             if(!updateStud){

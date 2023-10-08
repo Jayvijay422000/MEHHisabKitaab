@@ -40,8 +40,6 @@ const registerUser= async(req,res,role)=>{
 
         //get user id from employee table
 
-
-
         //hash password using bcrypt
 
         const hashpassword = await bcrypt.hash(password,12);
