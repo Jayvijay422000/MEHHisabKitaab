@@ -54,9 +54,9 @@ const registerUser= async(req,res,role)=>{
                     created_by:req.userId
                 });
                 await user.save();
-                res.send("user added successfully ")
+                res.status(201).send("user added successfully ")
             }else{
-                res.send("No such Employee")
+                res.status(404).send("No such Employee")
             }
        
 
