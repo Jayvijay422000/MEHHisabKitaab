@@ -6,12 +6,12 @@ const payOut = async(req,res)=>{
 
     try {
         
-        const { type , description,amount} = req.body;
+        const { type , description, amount} = req.body;
 
         const payout = new payOutModel({type,description,amount,created_by:req.userId});
         const result = await payout.save();
         
-        res.json({data:"added successfully"})
+        res.json(result)
         
 
     } catch (error) {

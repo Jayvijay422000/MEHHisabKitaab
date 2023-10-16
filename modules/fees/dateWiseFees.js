@@ -71,7 +71,7 @@ const dateWiseFees = async (req, res) => {
 
             if (feesList.length < 1) {
 
-                res.status(404).json({ error: "No data" })
+                res.status(200).send([])
 
             } else {
                 res.status(200).send(feesList);

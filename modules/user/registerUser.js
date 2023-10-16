@@ -35,7 +35,6 @@ const registerUser= async(req,res,role)=>{
         }else{
 
             var uid= await empmodel.findOne({"email":email,"mobile_number":mobile_number,"active":true}).select("_id");
-            console.log(uid)
         }
 
         //get user id from employee table
@@ -55,15 +54,15 @@ const registerUser= async(req,res,role)=>{
                     created_by:req.userId
                 });
                 await user.save();
-                res.status(201).send("user added successfully ")
+                res.status(201).send({message :"user added successfully "})
             }else{
-                res.status(404).send("No such Employee")
+                res.status(404).send({message :"No such Employee" })
             }
        
 
     } catch (error) {
         
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ message : error.message })
 
     }
 

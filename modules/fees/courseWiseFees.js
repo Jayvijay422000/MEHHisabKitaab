@@ -7,6 +7,7 @@ const courseWiseFees = async(req,res)=>{
     try {
         const { courseName } = req.body;
         const cid= await coursesModel.find({"course_name":courseName},"_id")
+       
       
         if(cid.length>0){
             const feesList = await studmodel.aggregate([
@@ -50,18 +51,18 @@ const courseWiseFees = async(req,res)=>{
 
             if(!feesList){
             
-                res.status(404).json({error:"No data"})
+                res.status(200).send([])
                 
             }else{
                     res.status(200).send(feesList);
                 }
         }else{
-            res.status(404).json({error:"No such Course"})
+            res.status(404).json({message:"No such Course"})
         }
  
 
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({message:error.message})
     }
 }
 
