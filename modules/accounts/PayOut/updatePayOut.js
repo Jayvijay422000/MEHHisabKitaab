@@ -6,13 +6,13 @@ const updatePayOut = async(req,res)=>{
 
     try {
 
-        const updatePay= await payOutModel.findOneAndUpdate(
+        const updatePayOut= await payOutModel.findOneAndUpdate(
             { _id:req.body['_id']},
             { $set: req.body,updated_by:req.userId }, // Dynamically set all fields from req.body
             { new: true } //if true then it returns the updated data
           );
         if(!updatePayOut){
-            res.send({"status":404,"message":"No Such User Exist","data":updatePayOut});
+            res.send({"status":404,"message":"No Such User Exist","data": updatePayOut});
 
         }else{
             res.send({"status":200,"message":"Successfully Updated","data":updatePayOut});
