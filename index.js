@@ -150,7 +150,7 @@ app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
 app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 
 /**************** courses routes ****************/
-app.post("/courses",verifyToken, checkRole(['admin']),addCourses);
+app.post("/courses",addCourses);
 app.get("/courses",verifyToken, checkRole(['admin']),getAllCourses);
 app.get("/course/:id",verifyToken, checkRole(['admin']),getByIdCourses);
 
