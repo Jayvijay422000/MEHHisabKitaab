@@ -8,8 +8,8 @@ const userModel = require("../../models/user/userSchema");
 const empmodel = require("../../models/employee/employeeSchema");
 
 const bcrypt = require('bcrypt');
-//only super user and register admin
-//only super user and admin can register staff
+//only super user can register admin
+//only super user can admin can register staff
 //image upload
 
 
@@ -53,17 +53,17 @@ const registerUser= async(req,res,role)=>{
                     mobile_number:mobile_number,
                     created_by:req.userId
                 });
-                await user.save();
-                res.status(201).send("user added successfully ")
+                const response= await user.save();
+                res.send({ "status": 200, "message": "user added successfully", "data": response });
+
             }else{
-                res.status(404).send("No such Employee")
+                res.send({ "status": 404, "message": "No such Employee", "data": null });
             }
        
 
     } catch (error) {
         
-        res.status(500).json({ message : error.message })
-
+        res.send({ "status": 500, "message": error.message, "data": null });
     }
 
 }

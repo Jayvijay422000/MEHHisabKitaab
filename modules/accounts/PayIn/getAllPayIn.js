@@ -1,19 +1,22 @@
-const payInModel= require("../../../models/accounts/payInSchema");
+const payInModel = require("../../../models/accounts/payInSchema");
 
-const getAllPayIn = async(req,res)=>{
+const getAllPayIn = async (req, res) => {
 
     try {
-        const result =await payInModel.find();
+        const result = await payInModel.find();
 
-        if(!result){
-            res.status(404).json({error:"no data found"})
-        }else{
-            res.status(200).send(result);
+        if (!result) {
+
+            res.send({ "status": 404, "message": "No Data Found", "data": null });
+
+        } else {
+            res.send({ "status": 200, "message": "successfully Found", "data": result });
         }
 
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 
-module.exports=getAllPayIn
+module.exports = getAllPayIn

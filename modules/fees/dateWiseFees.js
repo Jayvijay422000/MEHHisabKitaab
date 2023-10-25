@@ -71,18 +71,22 @@ const dateWiseFees = async (req, res) => {
 
             if (feesList.length < 1) {
 
-                res.status(200).send([])
+                res.send({"status":404,"message":"No Data Found","data":null});
+
 
             } else {
-                res.status(200).send(feesList);
+                res.send({"status":200,"message":"Successfully Found","data":feesList});
+
             }
         } else {
-            res.status(404).json({ error: "No such Course" })
+            res.send({ "status": 404, "message": "No Such Course", "data": null });
+
         }
 
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 

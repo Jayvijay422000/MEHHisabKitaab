@@ -32,14 +32,14 @@ const getByIdCourses =require("./modules/courses/getByIdCourses");
 const addPayIn = require("./modules/accounts/PayIn/addPayIn");
 const getAllPayIn =require("./modules/accounts/PayIn/getAllPayIn");
 const getPayInBtnDate = require("./modules/accounts/PayIn/getPayInBtnDate");
-
+const updatePayIn = require("./modules/accounts/PayIn/updatePayIn");
 //payOut
 
 //payIn
 const addPayOut = require("./modules/accounts/PayOut/addPayOut");
 const getAllPayOut =require("./modules/accounts/PayOut/getAllPayOut");
 const getPayOutBtnDate = require("./modules/accounts/PayOut/getPayOutBtnDate");
-
+const updatePayOut = require("./modules/accounts/PayOut/updatePayOut");
 //Employee
 
 const addEmployee = require("./modules/employee/addEmp");
@@ -54,6 +54,7 @@ const addStudent = require("./modules/students/addStud");
 const getAllStud =require("./modules/students/getAllStud");
 const getStudByField = require('./modules/students/getStudByField');
 const addFees=require('./modules/students/addFees');
+const updateFees=require("./modules/students/updateFees");
 const updateStud = require('./modules/students/updateStud');
 
 //fees
@@ -96,6 +97,38 @@ function checkRole(role) {
 }
 
 
+
+
+// Set up multer for image upload
+
+const multer = require('multer');
+
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'upload/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    },
+  });
+
+const upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 1024 * 1024 * 1, // 2 MB (adjust as needed)
+    },
+    fileFilter: (req, file, cb) => {
+      // Check file types (e.g., allow only images)
+      if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error('Only image files are allowed.'), false);
+      }
+      cb(null, true);
+    },
+  });
+
+
 /**************** fees routes ****************/
 
 app.post("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
@@ -104,10 +137,11 @@ app.post("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
 
 /**************** student routes ****************/
 
-app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
+app.post("/students",upload.array('images', 2),addStudent);
 app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
 app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
+// app.patch("/updateFees",verifyToken, checkRole(['admin','staff']),updateFees);
 app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 
 /**************** courses routes ****************/
@@ -133,6 +167,8 @@ app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);
+app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
+
 
 
 /****************payOut****************/
@@ -141,6 +177,8 @@ app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
 app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
+app.path("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
+
 
 /**************** User ****************/
 

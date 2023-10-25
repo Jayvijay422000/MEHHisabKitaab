@@ -13,3 +13,31 @@ try{
     }catch(err){
         console.log(err);
 }
+
+
+
+// const mongoose = require('mongoose');
+// require("dotenv").config();
+// const uri2 = "mongodb+srv://mukuman:<password>@cluster0.1tycozw.mongodb.net/?retryWrites=true&w=majority";
+// const uri=`${process.env.ONLINE_MONGO_URI}`
+// async function run() {
+//   try {
+//     // Connect to the MongoDB server
+//     await mongoose.connect(uri, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+
+//     // Confirm a successful connection by checking the state
+//     if (mongoose.connection.readyState === 1) {
+//       console.log("Connected to MongoDB!");
+//     } else {
+//       console.error("Failed to connect to MongoDB.");
+//     }
+//   } catch (error) {
+//     console.error("Error connecting to MongoDB:", error);
+//   }
+// }
+
+// run();
+

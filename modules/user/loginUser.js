@@ -1,38 +1,41 @@
 const userModel = require('../../models/user/userSchema');
 const jwt = require('jsonwebtoken');
-const bcrypt =require("bcrypt");
+const bcrypt = require("bcrypt");
 
 require("dotenv").config();
 
-function comparePassword(plainPassword,hashPassword) {
-    return bcrypt.compareSync(plainPassword,hashPassword)
+function comparePassword(plainPassword, hashPassword) {
+    return bcrypt.compareSync(plainPassword, hashPassword)
 }
 
-const loginUser= async(req,res)=>{
+const loginUser = async (req, res) => {
 
     try {
 
-        const { email,password}= req.body;
-
-       const user =await  userModel.findOne({"email":email});
-
-            if( !user || !comparePassword(password,user.password)){
-                return res.status(401).json({message:'Authentication failed'});
-            }
+        const { email, password } = req.body;
 
 
-            const token = jwt.sign({id:user._id,role:user.role},process.env.SECRET_KEY,{
-                expiresIn:86400, //24 hrs
+        const user = await userModel.findOne({ "email": email });
+
+        if (!user || !comparePassword(password, user.password)) {
+            return  res.send({ "status": 401, "message": "Authentication failed", "data": null });
+           
+        } else {
+
+
+            const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+                expiresIn: 86400, //24 hrs
             });
-        
-            res.json({token:token,role:user.role});
-        
 
-        
+            res.send({ "status": 200, "message": "Authentication failed", "data": {token, role:user.role} });
+
+        }
+
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 
 
-module.exports=loginUser;
+module.exports = loginUser;

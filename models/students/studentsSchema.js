@@ -85,8 +85,7 @@ const studSchema = new Schema({
                 amount:{
                     type:Number,
                     min:0
-                },
-                _id: false 
+                }
             }
         ]
     }],

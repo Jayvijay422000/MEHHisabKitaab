@@ -5,19 +5,23 @@ const updateStud= async(req,res)=>{
         try {
            
             const updateUser = await studmodel.findOneAndUpdate(
-                { _id:req.body['studId'],_id:req.body['mobile_number'],active:true},
-                { $set:req.body, updated_by:req.userId}, // Dynamically set all fields from req.body
+
+                { _id:req.body['studId'],active:true},
+                { $set:req.body,updated_by:req.userId}, // Dynamically set all fields from req.body
                 { new: true }
               );
               if(!updateUser){
-                res.status(404).send("no such user exists");
+                res.send({"status":404,"message":"No Such User Exist","data":updateUser});
             }else{
-                res.status(201).send(updateUser);
+                res.send({"status":200,"message":"Successfully Updated","data":updateUser});
+
             }
             
             
         } catch (error) {
-            res.status(500).json({error:error.message})
+
+            res.send({"status":500,"message":error.message,"data":null});
+
         }
 
 }

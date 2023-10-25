@@ -6,16 +6,17 @@ const payOut = async(req,res)=>{
 
     try {
         
-        const { type , description, amount} = req.body;
+        const { type , description,amount} = req.body;
 
         const payout = new payOutModel({type,description,amount,created_by:req.userId});
         const result = await payout.save();
         
-        res.json(result)
-        
+        res.send({ "status": 200, "message": "added successfully", "data": result });
+
 
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 
