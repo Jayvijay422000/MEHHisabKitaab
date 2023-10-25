@@ -7,14 +7,15 @@ try{
    const data= await coursesModel.find();
 
    if(!data){
-    res.status(404).json({error:"No data"})
+    res.send({ "status": 404, "message": "No Such Course", "data": null });
    }else{
-    res.send(data);
+    res.send({ "status": 200, "message": "Successfully Found", "data": data });
+
    }
    
-}catch(err){
+}catch(error){
+    res.send({ "status": 500, "message": error.message, "data": null });
 
-    res.status(500).json({error:err.message});
 }
 
 

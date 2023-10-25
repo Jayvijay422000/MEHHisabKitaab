@@ -56,16 +56,19 @@ const registerUser= async(req,res,role)=>{
                     mobile_number:mobile_number,
                     created_by:req.userId
                 });
-                await user.save();
-                res.send("user added successfully ")
+                const response= await user.save();
+                res.send({ "status": 200, "message": "user added successfully", "data": response });
+
             }else{
-                res.send("No such Employee")
+                res.send({ "status": 404, "message": "No such Employee", "data": null });
+
             }
        
 
     } catch (error) {
         
-        res.status(500).json({ error: error.message })
+        res.send({ "status": 500, "message": error.message, "data": null });
+
 
     }
 

@@ -4,22 +4,22 @@ const empmodel=require("../../models/employee/employeeSchema");
 const updateEmp= async(req,res)=>{
 
         try {
-
-           
-
             const updateUser = await empmodel.findOneAndUpdate(
-                { mobile_number:req.body['mobile_number'],active:true,updated_by:req.userId},
-                { $set: req.body }, // Dynamically set all fields from req.body
+                { _id:req.body['_id'],active:true},
+                { $set: req.body,updated_by:req.userId }, // Dynamically set all fields from req.body
                 { new: true } //if true then it returns the updated data
               );
             if(!updateUser){
-                res.send("no such user exists");
+                res.send({"status":404,"message":"No Such User Exist","data":updateUser});
+
             }else{
-                res.status(500).send(updateUser);
+                res.send({"status":200,"message":"Successfully Updated","data":updateUser});
+
             }
             
         } catch (error) {
-            res.status(500).json({error:error.message})
+            res.send({"status":500,"message":error.message,"data":null});
+
         }
 
 }

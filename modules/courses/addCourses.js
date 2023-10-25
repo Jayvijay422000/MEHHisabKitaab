@@ -6,11 +6,12 @@ const addCourses = async(req,res)=>{
         const {course_name,total_fees}=req.body;
         const course = new coursesModel({course_name,total_fees,created_by:req.userId});
 
-        await course.save();
+        const response =await course.save();
 
-        res.send("Added");
-    }catch(err){
-        res.status(500).json({error:error.message})
+        res.send({"status":200,"message":"Course Added",data:response});
+
+    }catch(error){
+        res.send({ "status": 500, "message": error.message, "data": null });
     }
 }
 

@@ -32,14 +32,14 @@ const getByIdCourses =require("./modules/courses/getByIdCourses");
 const addPayIn = require("./modules/accounts/PayIn/addPayIn");
 const getAllPayIn =require("./modules/accounts/PayIn/getAllPayIn");
 const getPayInBtnDate = require("./modules/accounts/PayIn/getPayInBtnDate");
-
+const updatePayIn = require("./modules/accounts/PayIn/updatePayIn");
 //payOut
 
 //payIn
 const addPayOut = require("./modules/accounts/PayOut/addPayOut");
 const getAllPayOut =require("./modules/accounts/PayOut/getAllPayOut");
 const getPayOutBtnDate = require("./modules/accounts/PayOut/getPayOutBtnDate");
-
+const updatePayOut = require("./modules/accounts/PayOut/updatePayOut");
 //Employee
 
 const addEmployee = require("./modules/employee/addEmp");
@@ -55,6 +55,7 @@ const addStudent = require("./modules/students/addStud");
 const getAllStud =require("./modules/students/getAllStud");
 const getStudByField = require('./modules/students/getStudByField');
 const addFees=require('./modules/students/addFees');
+const updateFees=require("./modules/students/updateFees");
 const updateStud = require('./modules/students/updateStud');
 
 //fees
@@ -91,15 +92,12 @@ function verifyToken(req,res,next){
 function checkRole(role) {
   
   return async (req,res,next)=>{
-    await userModel.findById(req.userId,(err,user)=>{
-
-      if(err || !user || !role.includes(user.role)){
+   const user=  await userModel.findById(req.userId);
+      if(!user || !role.includes(user.role)){
         return res.status(403).json({error:"Access Denied"});
       }
-
       next();
-
-    });
+   
   }
 }
 
@@ -148,6 +146,7 @@ app.post("/students",upload.array('images', 2),addStudent);
 app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
 app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
+// app.patch("/updateFees",verifyToken, checkRole(['admin','staff']),updateFees);
 app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 
 /**************** courses routes ****************/
@@ -173,6 +172,8 @@ app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);
+app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
+
 
 
 /****************payOut****************/
@@ -181,6 +182,8 @@ app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
 app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
+app.path("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
+
 
                                         /**************** User ****************/
 

@@ -19,6 +19,10 @@ const PayInSchema = new Schema({
         type:Number,
         required:true
     },
+    description:{
+        type:String,
+        required:true
+    },
     
     created_by: {
         type: mongoose.Schema.Types.ObjectId,

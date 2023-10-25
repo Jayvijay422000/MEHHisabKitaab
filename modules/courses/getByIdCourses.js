@@ -9,14 +9,17 @@ try {
     const course = await coursesModel.findOne(new mongoose.Types.ObjectId(req.params["id"]));
     
     if(!course){
-        res.status(404).json(course)
+        res.send({ "status": 404, "message": "No Data Found", "data": course });
+
     }else{
-        res.json(course);
+        res.send({ "status": 200, "message": "Successfully Found", "data": course });
+
     }
     
     
 } catch (error) {
-    res.status(500).json({error:error.message})
+    res.send({ "status": 500, "message": error.message, "data": null });
+
 }
 
 }

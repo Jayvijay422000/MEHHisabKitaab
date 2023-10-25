@@ -18,7 +18,8 @@ const loginUser = async (req, res) => {
         const user = await userModel.findOne({ "email": email });
 
         if (!user || !comparePassword(password, user.password)) {
-            return res.status(401).json({ message: 'Authentication failed ' + err });
+            return  res.send({ "status": 401, "message": "Authentication failed", "data": null });
+           
         } else {
 
 
@@ -26,12 +27,14 @@ const loginUser = async (req, res) => {
                 expiresIn: 86400, //24 hrs
             });
 
-            res.json({ token });
+            res.send({ "status": 200, "message": "Authentication failed", "data": {token} });
+
         }
 
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 

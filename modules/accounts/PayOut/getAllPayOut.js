@@ -6,13 +6,16 @@ const getAllPayOut = async(req,res)=>{
         const result =await payOutModel.find();
 
         if(!result){
-            res.status(404).json({error:"no data found"})
+            res.send({ "status": 404, "message": "No Data Found", "data": null });
+
         }else{
-            res.send(result);
+            res.send({ "status": 200, "message": "successfully Found", "data": result });
+
         }
 
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.send({ "status": 500, "message": error.message, "data": null });
+
     }
 }
 
