@@ -10,17 +10,17 @@ const getAllStud = async(req,res)=>{
         const stud = await studmodel.find();
 
         if(!stud){
-            res.send({"status":404,"message":"No Data Found","data":stud});
+            res.status(404).send({status: 404, message: "No Data Found", data: []});
 
         }else{
-            res.send({"status":200,"message":"Successfully Found","data":stud});
+            res.status(200).send({status: 200, message: "Successfully Found", data: stud});
 
         }
 
 
     } catch (error) {
         
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status: 500, message: error.message, data: null});
 
     }
 

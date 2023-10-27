@@ -14,10 +14,10 @@ const getPayInBtnDate = async(req,res)=>{
             }
         });
 
-        res.send({ "status": 200, "message": "successfully Found", "data": result });
+        res.status(200).send({ status: 200, message: "successfully Found", data: result });
 
     } catch (error) {
-        res.send({ "status": 500, "message": error.message, "data": null });
+        res.status(500).send({ status: 500, message: error.message, data: null });
 
     }
 }

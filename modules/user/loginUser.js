@@ -18,7 +18,7 @@ const loginUser = async (req, res) => {
         const user = await userModel.findOne({ "email": email });
 
         if (!user || !comparePassword(password, user.password)) {
-            return  res.send({ "status": 401, "message": "Authentication failed", "data": null });
+            return  res.status(401).send({ status: 401,message: "Authentication failed", data: null });
            
         } else {
 
@@ -27,12 +27,12 @@ const loginUser = async (req, res) => {
                 expiresIn: 86400, //24 hrs
             });
 
-            res.send({ "status": 200, "message": "Authentication failed", "data": {token, role:user.role} });
+            res.status(200).send({ status: 200,message: "Successfully login", data: {token, role:user.role} });
 
         }
 
     } catch (error) {
-        res.send({ "status": 500, "message": error.message, "data": null });
+        res.status(500).send({ status: 500,message: error.message, data: null });
 
     }
 }

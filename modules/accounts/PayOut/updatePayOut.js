@@ -12,15 +12,15 @@ const updatePayOut = async(req,res)=>{
             { new: true } //if true then it returns the updated data
           );
         if(!updatePayOut){
-            res.send({"status":404,"message":"No Such User Exist","data": updatePayOut});
+            res.status(404).send({status:404,message:"No Such User Exist",data: null});
 
         }else{
-            res.send({"status":200,"message":"Successfully Updated","data":updatePayOut});
+            res.status(200).send({status:200,message:"Successfully Updated",data:updatePayOut});
 
         }
        
     } catch (error) {
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status:500,message:error.message,data:null});
     }
 }
 

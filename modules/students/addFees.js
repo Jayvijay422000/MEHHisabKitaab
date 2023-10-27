@@ -27,16 +27,16 @@ const addFees= async(req,res)=>{
                 { new: true }
               );
             if(!updateStud){
-                res.send({"status":404,"message":"No Such User Exist","data":updateUser});
+                res.status(404).send({status: 404, message: "No Such Student Exist", data: null});
             }else{
                 const description = "Installment paid by "+updateStud["full_name"]+" \n Mobile Number  "+updateStud["mobile_number"][0];
                 payInEmitter.emit('addFees',description, newFees['amount'])
                
-                res.send({"status":200,"message":"Fees Added Successfully","data":updateUser});
+                res.status(201).send({status: 201, message: "Fees Added Successfully", data: updateUser});
             }
             
         } catch (error) {
-            res.send({"status":500,"message":error.message,"data":null});
+            res.status(500).send({status: 500, message: error.message, data: null});
 
         }
 

@@ -12,11 +12,11 @@ const addEmp= async(req,res)=>{
 
        const response= await emp.save();
 
-       res.send({ "status": 201, "message": "Employee added successfully", "data": response });
+       res.status(201).send({ status: 201, message: "Employee added successfully", data: response });
 
 
     }catch(error){
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status: 500, message: error.message, data: null});
 
     }
 }

@@ -69,13 +69,13 @@ function verifyToken(req,res,next){
   const token =req.headers['authorization'];
 
   if(!token){
-    return res.status(403).json({error:'No token Provided'});
+    return res.status(403).json({status: 403, message: 'No token Provided', data: null});
 
   }
 
   jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
       if(err){
-          return res.status(401).json({error:'Failed to authenticate token'})
+          return res.status(401).json({status: 401, message: 'Failed to authenticate token', data: null})
       }
       req.userId = decoded.id;
       next();
@@ -89,7 +89,7 @@ function checkRole(role) {
   return async (req,res,next)=>{
    const user=  await userModel.findById(req.userId);
       if(!user || !role.includes(user.role)){
-        return res.status(403).json({error:"Access Denied"});
+        return res.status(403).json({status: 403, message: "Access Denied", data: null});
       }
       next();
    

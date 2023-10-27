@@ -8,10 +8,10 @@ const addCourses = async(req,res)=>{
 
         const response =await course.save();
 
-        res.send({"status":200,"message":"Course Added",data:response});
+        res.status(201).send({status: 201, message: "SuccessFully Added Course", data: response});
 
     }catch(error){
-        res.send({ "status": 500, "message": error.message, "data": null });
+        res.send({ status: 500, message: error.message, data: null });
     }
 }
 

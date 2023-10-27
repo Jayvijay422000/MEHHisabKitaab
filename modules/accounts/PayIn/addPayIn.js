@@ -11,11 +11,11 @@ const payIn = async(req,res)=>{
         const payin = new payInModel({type,amount,created_by:req.userId});
         const result = await payin.save();
         if(result){
-        res.json({data:"added successfully"})
+        res.status(201).json({status: 201, message: "added successfully", data: result})
         }
 
     } catch (error) {
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status: 500, message: error.message, data: null});
     }
 }
 

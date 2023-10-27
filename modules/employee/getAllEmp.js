@@ -7,17 +7,17 @@ const getAllEmp = async(req,res)=>{
             const emp = await empmodel.find();
 
             if(!emp){
-                res.send({"status":404,"message":"No Data Found","data":null});
+                res.status(404).send({status: 404, message: "No Data Found", data: null});
 
             }else{
-                res.send({"status":200,"message":"Successfully Found","data":emp});
+                res.status(200).send({status: 200, message: "Successfully Found", data: emp});
 
             }
     
 
         } catch (error) {
             
-            res.send({"status":500,"message":error.message,"data":null});
+            res.status(500).send({status: 500, message: error.message, data: null});
 
         }
 

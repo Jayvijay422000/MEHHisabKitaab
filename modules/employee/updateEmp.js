@@ -10,15 +10,15 @@ const updateEmp= async(req,res)=>{
                 { new: true } //if true then it returns the updated data
               );
             if(!updateUser){
-                res.send({"status":404,"message":"No Such User Exist","data":updateUser});
+                res.status(404).send({status: 404, message: "No Such User Exist", data: updateUser});
 
             }else{
-                res.send({"status":200,"message":"Successfully Updated","data":updateUser});
+                res.status(200).send({status: 200, message: "Successfully Updated", data: updateUser});
 
             }
             
         } catch (error) {
-            res.send({"status":500,"message":error.message,"data":null});
+            res.status(500).send({status: 500 ,message: error.message, data: null});
 
         }
 

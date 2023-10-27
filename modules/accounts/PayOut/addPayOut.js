@@ -11,11 +11,11 @@ const payOut = async(req,res)=>{
         const payout = new payOutModel({type,description,amount,created_by:req.userId});
         const result = await payout.save();
         
-        res.send({ "status": 200, "message": "added successfully", "data": result });
+        res.status(201).send({ status: 201, message: "added successfully", data: result });
 
 
     } catch (error) {
-        res.send({ "status": 500, "message": error.message, "data": null });
+        res.status(500).send({ status: 500, message: error.message, data: null });
 
     }
 }

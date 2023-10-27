@@ -48,15 +48,15 @@ const updateFees = async (req, res) => {
         //const updateStud = await studmodel.findOneAndUpdate(filter,update,options);
 
         if (!updateStud) {
-            res.status(404).send("no such user exists");
+            res.status(404).send({status: 404, message: "no such user exists", data: null});
         } else {
             const description = "Installment of " + updatedFees + " ₹ paid by " + updateStud["full_name"] + " \n Mobile Number  " + updateStud["mobile_number"][0];
             payInEmitter.emit('addFees', description, updatedFees);
-            res.status(201).send(updateStud);
+            res.status(200).send({status: 200, message: "SuccessFully Updated", data: updateStud});
         }
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({status: 500, message: error.message, data: null })
     }
 
 }

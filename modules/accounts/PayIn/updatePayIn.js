@@ -12,15 +12,15 @@ const updatePayIn = async(req,res)=>{
             { new: true } //if true then it returns the updated data
           );
         if(!updatePay){
-            res.send({"status":404,"message":"No Such User Exist","data":updatePay});
+            res.status(403).send({status:403,message:"No Such User Exist",data:updatePay});
 
         }else{
-            res.send({"status":200,"message":"Successfully Updated","data":updatePay});
+            res.status(200).send({status:200,message:"Successfully Updated",data:updatePay});
 
         }
        
     } catch (error) {
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status:500,message:error.message,data:null});
     }
 }
 

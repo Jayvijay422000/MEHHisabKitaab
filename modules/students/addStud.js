@@ -14,7 +14,7 @@ const addStud = async (req, res) => {
         const existsStud = await studmodel.findOne({ email: email });
 
         if (existsStud) {
-            res.send({ "status": 200, "message": "student with email already exists", "data": null });
+            res.status(403).send({ status: 403, message: "student with email already exists", data: null });
 
         } else {
 
@@ -38,16 +38,16 @@ const addStud = async (req, res) => {
                 }
                 const stud = new studmodel({ full_name: fullName, mobile_number: [MobileNumber], email: email, address: address, qualification: qualification, dob: dob, pincode: pincode, personal_doc: personalDoc, course_details: [courseDetails], created_by: req.userId })
                 const response = await stud.save()
-                res.send({ "status": 200, "message": "student added successfully", "data": response });
+                res.status(201).send({ status: 201, message: "student added successfully", data: response });
 
 
             } else {
-                res.send({ "status": 404, "message": "No Course Found", "data": null });
+                res.status(404).send({ status: 404, message: "No Course Found", data: null });
 
             }
         }
     } catch (error) {
-        res.send({"status":500,"message":error.message,"data":null});
+        res.status(500).send({status: 500, message: error.message, data: null});
 
     }
 
