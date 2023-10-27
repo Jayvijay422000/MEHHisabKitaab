@@ -163,7 +163,7 @@ app.patch("/salary",verifyToken, checkRole(['admin']),addSalary);
 
 /****************payIn****************/
 
-app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
+app.post("/payIn",addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);

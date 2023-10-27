@@ -1,4 +1,7 @@
 require("dotenv").config();
+const moment = require('moment-timezone');
+moment.tz.setDefault('Asia/Kolkata'); 
+
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
@@ -8,7 +11,7 @@ const PayInSchema = new Schema({
 
     date:{
         type:Date,
-        default:Date.now
+        default: () =>{ return moment(new Date()).tz("Asia/Kolkata").format()}
 
     },
     type:{
