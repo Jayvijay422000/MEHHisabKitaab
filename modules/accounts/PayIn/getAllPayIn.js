@@ -3,7 +3,7 @@ const payInModel = require("../../../models/accounts/payInSchema");
 const getAllPayIn = async (req, res) => {
 
     try {
-        const result = await payInModel.find();
+        const result = await payInModel.find().sort({_id: -1});
 
         if (!result) {
 

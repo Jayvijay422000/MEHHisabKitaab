@@ -13,7 +13,7 @@ const updateStud= async(req,res)=>{
               if(!updateUser){
                 res.status(404).send({status: 404 ,message: "No Such User Exist", data: updateUser});
             }else{
-                res.status(200).send({status: 200, message: "Successfully Updated", data: updateUser});
+                res.status(200).send({status: 200, message: "Successfully Updated Student Details", data: updateUser});
 
             }
             

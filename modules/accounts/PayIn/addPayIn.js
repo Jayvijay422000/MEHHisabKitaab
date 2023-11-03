@@ -6,9 +6,9 @@ const payIn = async(req,res)=>{
 
     try {
         
-        const { type , amount} = req.body;
+        const { type , description, amount} = req.body;
 
-        const payin = new payInModel({type,amount,created_by:req.userId});
+        const payin = new payInModel({type,amount,description,created_by:req.userId});
         const result = await payin.save();
         if(result){
         res.status(201).json({status: 201, message: "added successfully", data: result})

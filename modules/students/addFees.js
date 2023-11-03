@@ -7,39 +7,38 @@ const mongoose = require("mongoose");
 const payInEmitter = new EventEmitter();
 
 // Subscribe to the 'greet' event
-payInEmitter.on('addFees', async (description,amount) => {
-    const type="Fees";
-    const payout = new PayInModel({type,description,amount});
+payInEmitter.on('addFees', async (description, amount) => {
+    const type = "Fees";
+    const payout = new PayInModel({ type, description, amount });
     const result = await payout.save();
-    
+
 });
 
 
-const addFees= async(req,res)=>{
+const addFees = async (req, res) => {
 
-        try {
-            const {studId,newFees,course_id}=req.body;
+    try {
+        const { studId, newFees, course_id } = req.body;
 
+        const updateStud = await studmodel.findOneAndUpdate(
+            { _id:studId,active:true, "course_details.course_id":new mongoose.Types.ObjectId(course_id)},
+            { $push: {"course_details.$.fees_installments":newFees}}, // Dynamically set all fields from req.body
+            { new: true }
+          );
 
-            const updateStud = await studmodel.findOneAndUpdate(
-                { _id:studId,active:true, "course_details.course_id":new mongoose.Types.ObjectId(course_id)},
-                { $push: {"course_details.$.fees_installments":newFees}}, // Dynamically set all fields from req.body
-                { new: true }
-              );
-            if(!updateStud){
-                res.status(404).send({status: 404, message: "No Such Student Exist", data: null});
-            }else{
-                const description = "Installment paid by "+updateStud["full_name"]+" \n Mobile Number  "+updateStud["mobile_number"][0];
-                payInEmitter.emit('addFees',description, newFees['amount'])
-               
-                res.status(201).send({status: 201, message: "Fees Added Successfully", data: updateUser});
-            }
-            
-        } catch (error) {
-            res.status(500).send({status: 500, message: error.message, data: null});
-
+        if (!updateStud) {
+            res.status(404).send({ status: 404, message: "No Such User Exist", data: null });
+        } else {
+            const description = "Installment paid by " + updateStud["full_name"] + " \n Mobile Number  " + updateStud["mobile_number"][0];
+            payInEmitter.emit('addFees', description, newFees['amount'])
+            res.status(200).send({ status: 200, message: "Fees Added Successfully", data: updateStud });
         }
+
+    } catch (error) {
+        res.status(500).send({ status: 500, message: error.message, data: null });
+
+    }
 
 }
 
-module.exports=addFees;
+module.exports = addFees;
