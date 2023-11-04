@@ -8,7 +8,7 @@ const getStudByField = async(req,res)=>{
             const { field , fieldValue } = req.query;
             var query={}
             if(field=="courseName"){
-                const course_id=await coursesModel.find({course_name:fieldValue},"_id")
+                const course_id=(await coursesModel.find({course_name:fieldValue},"_id")).sort({_id: -1})
                 var query={
                     "course_details.course_id":course_id
                 }
@@ -17,7 +17,7 @@ const getStudByField = async(req,res)=>{
                     [field]:fieldValue
                 }
             }
-            const stud = await studmodel.find(query);
+            const stud = await studmodel.find(query).sort({_id: -1});
 
             if(!stud){
             

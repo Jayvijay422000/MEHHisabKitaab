@@ -1,6 +1,7 @@
 const empmodel=require("../../models/employee/employeeSchema");
 const payOutModel = require("../../models/accounts/payOutSchema");
 const EventEmitter = require('events');
+const mongoose = require("mongoose");
 
 const payOutEmitter = new EventEmitter();
 
@@ -15,10 +16,11 @@ payOutEmitter.on('addSalary', async (description,amount) => {
 const addSalary= async(req,res)=>{
 
         try {
-            const {newSalary}=req.body;
+            console.log(req.userId)
+            const {_id ,newSalary}=req.body;
             const updateUser = await empmodel.findOneAndUpdate(
-                { _id:req.body['_id'],active:true},
-                { $push: {salary:newSalary,updated_by:req.userId}}, // Dynamically set all fields from req.body
+                { _id:new mongoose.Types.ObjectId(_id),active:true,updated_by:req.userId},
+                { $push: {salary:newSalary}}, // Dynamically set all fields from req.body
                 { new: true }
               );
             if(!updateUser){

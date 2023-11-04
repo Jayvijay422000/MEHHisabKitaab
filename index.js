@@ -102,6 +102,7 @@ function checkRole(role) {
 // Set up multer for image upload
 
 const multer = require('multer');
+const updateSalary = require('./modules/employee/updateSalary');
 
 
 
@@ -141,7 +142,7 @@ app.post("/students",upload.array('images', 2),addStudent);
 app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
 app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
-// app.patch("/updateFees",verifyToken, checkRole(['admin','staff']),updateFees);
+app.patch("/updateFees",verifyToken, checkRole(['admin','staff']),updateFees);
 app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 
 /**************** courses routes ****************/
@@ -157,6 +158,7 @@ app.get("/searchemp",verifyToken, checkRole(['admin']),getEmpByField);
 app.get("/employee",verifyToken, checkRole(['admin']),getAllEmp);
 app.patch("/employee",verifyToken, checkRole(['admin']),updateEmp);
 app.patch("/salary",verifyToken, checkRole(['admin']),addSalary);
+app.patch("/updatesalary",verifyToken, checkRole(['admin']),updateSalary);
 
 
  /**************** Accounts ****************/
