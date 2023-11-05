@@ -18,8 +18,8 @@ try{
 
 // const mongoose = require('mongoose');
 // require("dotenv").config();
-// const uri2 = "mongodb+srv://mukuman:<password>@cluster0.1tycozw.mongodb.net/?retryWrites=true&w=majority";
-// const uri=`${process.env.ONLINE_MONGO_URI}`
+// const uri2 =`${process.env.MONGO_URI}`;
+// const uri=`${process.env.ONLINE_MONGO_URI}`;
 // async function run() {
 //   try {
 //     // Connect to the MongoDB server

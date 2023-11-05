@@ -31,9 +31,9 @@ const updateSalary = async (req, res) => {
     if (!updateUser) {
       res.status(404).send({ status: 404, message: "no such user exists", data: null });
     } else {
-        const description = "salary paid to "+updateUser["full_name"]+" \n Mobile Number  "+updateUser["mobile_number"];
-        payOutEmitter.emit('addSalary',description, updatedAmount);
-        console.log(description)
+        // const description = "salary paid to "+updateUser["full_name"]+" \n Mobile Number  "+updateUser["mobile_number"];
+        // payOutEmitter.emit('addSalary',description, updatedAmount);
+        // console.log(description)
         res.status(201).send({status: 201, message: "Successfully Updated", data: updateUser});
     }
   } catch (error) {

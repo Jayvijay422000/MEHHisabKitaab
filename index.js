@@ -63,6 +63,21 @@ const courseWiseFees = require("./modules/fees/courseWiseFees");
 const dateWiseFees = require('./modules/fees/dateWiseFees');
 const userModel = require('./models/user/userSchema');
 
+
+
+//reference User
+
+const addReferenceUser = require("./modules/referenceUser/addReferenceUser");
+const updateReferenceUser =require("./modules/referenceUser/updateReferenceUser");
+const getAllReferenceUser =require("./modules/referenceUser/getAllReferenceUser");
+const getReferenceUserByField = require("./modules/referenceUser/getReferenceUserByField");
+const getWishFieldOfReferenceUser = require("./modules/referenceUser/getWishFieldOfReferenceUser");
+
+
+
+
+
+
 // Middleware for verifying JWT tokens
 
 function verifyToken(req,res,next){
@@ -138,7 +153,8 @@ app.post("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
 
 /**************** student routes ****************/
 
-app.post("/students",upload.array('images', 2),addStudent);
+//app.post("/students",upload.array('images', 2),addStudent);
+app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
 app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
 app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
@@ -149,6 +165,16 @@ app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
 app.post("/courses",verifyToken, checkRole(['admin']),addCourses);
 app.get("/courses",verifyToken, checkRole(['admin']),getAllCourses);
 app.get("/course/:id",verifyToken, checkRole(['admin']),getByIdCourses);
+
+/**************** referenceUser ****************/
+
+
+
+app.post("/refUser",verifyToken, checkRole(['admin','staff']),addReferenceUser);
+app.get("/searchRefUser",verifyToken, checkRole(['admin','staff']),getReferenceUserByField);
+app.get("/refUser",verifyToken, checkRole(['admin','staff']),getAllReferenceUser);
+app.patch("/refUser",verifyToken, checkRole(['admin','staff']),updateReferenceUser);
+app.get("/wishFieldRefUser",verifyToken, checkRole(['admin','staff']),getWishFieldOfReferenceUser);
 
 
 /**************** employees ****************/

@@ -38,8 +38,8 @@ const updateFees = async (req, res) => {
       { "inner._id": installmentId }
     ];
 
-    const updateStud = await studmodel.findOneAndUpdate(filter, update, { arrayFilters });
-
+    const updateStud = await studmodel.findOneAndUpdate(filter, update, { arrayFilters },{ new: true });
+    
     // const updateStud=await studmodel.findOne( { 
     //         _id:  studId, 
     //         active: true, 
@@ -51,10 +51,10 @@ const updateFees = async (req, res) => {
     if (!updateStud) {
       res.status(404).send({ status: 404, message: "no such user exists", data: null });
     } else {
-      const description = "Installment of " + updatedFees + " ₹ paid by " + updateStud["full_name"] + " \n Mobile Number  " + updateStud["mobile_number"][0];
-      payInEmitter.emit('addFees', description, updatedFees);
-      const stud = await studmodel.findOne({_id : studId});
-      res.status(200).send({ status: 200, message: "SuccessFully Updated Fees", data: stud });
+      // const description = "Installment of " + updatedFees + " ₹ paid by " + updateStud["full_name"] + " \n Mobile Number  " + updateStud["mobile_number"][0];
+      // payInEmitter.emit('addFees', description, updatedFees);
+      // const stud = await studmodel.findOne({_id : studId});
+      res.status(200).send({ status: 200, message: "SuccessFully Updated Fees", data: updateStud });
     }
 
   } catch (error) {

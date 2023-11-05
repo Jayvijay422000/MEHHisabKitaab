@@ -2,6 +2,7 @@
 const studmodel = require("../../models/students/studentsSchema");
 
 const coursesModel = require("../../models/courses/courseSchema");
+const referenceUserModel = require("../../models/reference/referenceUserSchema");
 
 
 
@@ -9,8 +10,12 @@ const addStud = async (req, res) => {
     try {
         const { fullName, mobileNumber, email, address,
             qualification, dob, pincode, personalDoc,
-            courseName, totalFees, DOA
+            courseName, totalFees, DOA,refId
         } = req.body;
+
+        const existsRefUser = referenceUserModel.findOne({_id:refId})
+
+        
 
         const existsStud = await studmodel.findOne({ email: email });
 
@@ -19,7 +24,12 @@ const addStud = async (req, res) => {
                 status: 403, message: "student already exists", data: null
             });
 
-        } else {
+        } else if(!existsRefUser){
+            res.status(403).send({
+                status: 403, message: "Invalid Reference User", data: null
+            });
+        }
+         else {
             const course_id = await coursesModel.findOne({ course_name: courseName });
             if (course_id) {
 
@@ -29,10 +39,13 @@ const addStud = async (req, res) => {
                     total_fees: totalFees,
                     DOA: DOA
                 }
+
+                //add one default maruti reference user , if no outside reference pass the id of maruti user
+
                 const stud = new studmodel({
                     full_name: fullName, mobile_number: [mobileNumber], email: email,
                     address: address, qualification: qualification, dob: dob,
-                    pincode: pincode, personal_doc: personalDoc, course_details: [courseDetails],
+                    pincode: pincode, personal_doc: personalDoc, course_details: [courseDetails],refId:refId,
                     created_by: req.userId
                 })
                 await stud.save()
