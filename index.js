@@ -149,8 +149,8 @@ const upload = multer({
 
 /**************** fees routes ****************/
 
-app.get("/feesByCourse",verifyToken, checkRole(['admin']),paginationMiddleware(10),courseWiseFees);
-app.get("/feesByDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),dateWiseFees)
+app.post("/feesByCourse",verifyToken, checkRole(['admin']),paginationMiddleware(10),courseWiseFees);
+app.post("/feesByDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),dateWiseFees)
 
 
 /**************** student routes ****************/
