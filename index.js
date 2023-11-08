@@ -197,7 +197,7 @@ app.patch("/updatesalary",verifyToken, checkRole(['admin']),updateSalary);
 
 
 app.post("/payIn",addPayIn);
-app.get("/payIn",verifyToken, checkRole(['admin','staff']),paginationMiddleware(10),getAllPayIn);
+app.get("/payIn",verifyToken, checkRole(['admin']),paginationMiddleware(10),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),getPayInBtnDate);
 app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
