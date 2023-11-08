@@ -11,6 +11,13 @@ const courseWiseFees = async (req, res) => {
 
         if (cid.length > 0) {
             const feesList = await studmodel.aggregate([
+
+                {
+                    $skip: req.pagination.startIndex
+                },
+                {
+                    $limit: req.pagination.limit
+                },
                 {
                     $match: {
                         "course_details.course_id": cid[0]["_id"]
