@@ -17,14 +17,14 @@ payOutEmitter.on('addSalary', async (description,amount) => {
 const updateSalary = async (req, res) => {
 
   try {
-    const { empId, salaryId, updatedAmount } = req.body
+    const { empId, salaryId, amount } = req.body
    const updateUser = await empmodel.findOneAndUpdate(
         {
           _id: new mongoose.Types.ObjectId(empId),
           'salary._id':  new mongoose.Types.ObjectId(salaryId),
         },
         {
-          $set: { 'salary.$.amount': updatedAmount },
+          $set: { 'salary.$.amount': amount },
         }
       )
     

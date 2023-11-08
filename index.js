@@ -2,7 +2,8 @@ const express =require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-app.use(cors());
+
+app.use(cors({origin: true, credentials: true}));
 
 const jwt = require('jsonwebtoken');
 require("./db");
@@ -168,14 +169,11 @@ app.get("/course/:id",verifyToken, checkRole(['admin']),getByIdCourses);
 
 /**************** referenceUser ****************/
 
-
-
 app.post("/refUser",verifyToken, checkRole(['admin','staff']),addReferenceUser);
 app.get("/searchRefUser",verifyToken, checkRole(['admin','staff']),getReferenceUserByField);
 app.get("/refUser",verifyToken, checkRole(['admin','staff']),getAllReferenceUser);
 app.patch("/refUser",verifyToken, checkRole(['admin','staff']),updateReferenceUser);
 app.get("/wishFieldRefUser",verifyToken, checkRole(['admin','staff']),getWishFieldOfReferenceUser);
-
 
 /**************** employees ****************/
 
