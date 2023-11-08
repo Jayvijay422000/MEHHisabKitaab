@@ -17,7 +17,7 @@ const getStudByField = async(req,res)=>{
                     [field]:fieldValue
                 }
             }
-            const stud = await studmodel.find(query).sort({_id: -1});
+            const stud = await studmodel.find(query).sort({_id: -1}).limit(req.pagination.limit).skip(req.pagination.startIndex);
 
             if(!stud){
             

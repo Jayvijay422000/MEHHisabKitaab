@@ -73,7 +73,8 @@ const getAllReferenceUser =require("./modules/referenceUser/getAllReferenceUser"
 const getReferenceUserByField = require("./modules/referenceUser/getReferenceUserByField");
 const getWishFieldOfReferenceUser = require("./modules/referenceUser/getWishFieldOfReferenceUser");
 
-
+//MiddleWare
+const paginationMiddleware = require("./modules/middleware/paginationMiddleware")
 
 
 
@@ -147,16 +148,16 @@ const upload = multer({
 
 /**************** fees routes ****************/
 
-app.post("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
-app.post("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
+app.get("/feesByCourse",verifyToken, checkRole(['admin']),paginationMiddleware(10),courseWiseFees);
+app.get("/feesByDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),dateWiseFees)
 
 
 /**************** student routes ****************/
 
 //app.post("/students",upload.array('images', 2),addStudent);
 app.post("/students",verifyToken, checkRole(['admin','staff']),addStudent);
-app.get("/students",verifyToken, checkRole(['admin','staff']),getAllStud);
-app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),getStudByField);
+app.get("/students",verifyToken, checkRole(['admin','staff']),paginationMiddleware(10),getAllStud);
+app.get("/searchStudents",verifyToken, checkRole(['admin','staff']),paginationMiddleware(10),getStudByField);
 app.patch("/fees",verifyToken, checkRole(['admin','staff']),addFees);
 app.patch("/updateFees",verifyToken, checkRole(['admin','staff']),updateFees);
 app.patch("/students",verifyToken, checkRole(['admin','staff']),updateStud);
@@ -191,10 +192,12 @@ app.patch("/updatesalary",verifyToken, checkRole(['admin']),updateSalary);
 
 /****************payIn****************/
 
+
+
 app.post("/payIn",addPayIn);
-app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
+app.get("/payIn",verifyToken, checkRole(['admin','staff']),paginationMiddleware(10),getAllPayIn);
 //between to date
-app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);
+app.get("/payInBtnDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),getPayInBtnDate);
 app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
 
 
@@ -202,9 +205,9 @@ app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
 /****************payOut****************/
 
 app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
-app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
+app.get("/payOut",verifyToken, checkRole(['admin']),paginationMiddleware(10),getAllPayOut);
 //between to date
-app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
+app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),getPayOutBtnDate);
 app.path("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
 
 

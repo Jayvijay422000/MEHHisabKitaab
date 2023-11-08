@@ -12,7 +12,7 @@ const getPayInBtnDate = async(req,res)=>{
                 $gte: new Date(startDate),
                 $lte: new Date(endDate)
             }
-        }).sort({_id: -1});
+        }).sort({_id: -1}).limit(req.pagination.limit).skip(req.pagination.startIndex);
 
         res.status(200).send({ status: 200, message: "successfully Found", data: result });
 
