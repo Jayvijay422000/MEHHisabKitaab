@@ -1,8 +1,12 @@
 const express =require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+
 const app = express();
+
+const cors = require('cors');
 app.use(cors());
+
+
 
 const jwt = require('jsonwebtoken');
 require("./db");
@@ -47,7 +51,7 @@ const addSalary = require("./modules/employee/addSalary");
 const getEmpByField = require("./modules/employee/getEmpByField");
 const getAllEmp = require("./modules/employee/getAllEmp");
 const updateEmp = require('./modules/employee/updateEmp');
-
+const updateSalary = require('./modules/employee/updateSalary');
 //students
 
 const addStudent = require("./modules/students/addStud");
@@ -77,6 +81,8 @@ const getWishFieldOfReferenceUser = require("./modules/referenceUser/getWishFiel
 const paginationMiddleware = require("./modules/middleware/paginationMiddleware")
 
 
+const rateLimitMiddleware =require("./modules/middleware/ratelimitMiddleware");
+app.use(rateLimitMiddleware);
 
 
 // Middleware for verifying JWT tokens
@@ -118,10 +124,6 @@ function checkRole(role) {
 // Set up multer for image upload
 
 const multer = require('multer');
-const updateSalary = require('./modules/employee/updateSalary');
-
-
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'upload/');
