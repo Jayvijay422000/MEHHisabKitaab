@@ -23,7 +23,7 @@ const userSchema = new Schema({
     },
     role:{
         type:String,
-        enum:["staff","admin","student"]
+        enum:["staff","admin","student","superadmin"]
     },
     mobile_number:{
         type:String,
