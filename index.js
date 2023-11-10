@@ -196,7 +196,7 @@ app.post("/payIn",addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin','staff']),paginationMiddleware(10),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),getPayInBtnDate);
-app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
+app.patch("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
 
 
 
@@ -206,7 +206,7 @@ app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
 app.get("/payOut",verifyToken, checkRole(['admin']),paginationMiddleware(10),getAllPayOut);
 //between to date
 app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),paginationMiddleware(10),getPayOutBtnDate);
-app.path("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
+app.patch("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
 
 
 /**************** User ****************/

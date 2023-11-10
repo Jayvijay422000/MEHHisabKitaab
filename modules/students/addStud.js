@@ -12,7 +12,6 @@ const addStud = async (req, res) => {
             qualification, dob, pincode, personalDoc,
             courseName, totalFees, DOA,refId
         } = req.body;
-
         const existsRefUser = referenceUserModel.findOne({_id:refId})
 
         

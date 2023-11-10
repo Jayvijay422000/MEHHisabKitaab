@@ -16,13 +16,13 @@ payOutEmitter.on('addSalary', async (description,amount) => {
 const addSalary= async(req,res)=>{
 
         try {
-            console.log(req.userId)
             const {_id ,newSalary}=req.body;
             const updateUser = await empmodel.findOneAndUpdate(
                 { _id:new mongoose.Types.ObjectId(_id),active:true,updated_by:req.userId},
                 { $push: {salary:newSalary}}, // Dynamically set all fields from req.body
                 { new: true }
               );
+              
             if(!updateUser){
                 res.status(404).send({status: 404, message: "No Such User Exist", data: updateUser});
 

@@ -16,7 +16,6 @@ const bcrypt = require('bcrypt');
 //add field in every table  created_at created_by , updated_at,updated_by 
 const registerUser = async (req, res, role) => {
 
-    // console.log(role);
     try {
         const { email, mobile_number, password } = req.body;
 
