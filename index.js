@@ -182,7 +182,7 @@ app.get("/wishFieldRefUser",verifyToken, checkRole(['admin','staff']),getWishFie
 
 /**************** employees ****************/
 
-app.post("/employee",addEmployee);
+app.post("/employee",verifyToken, checkRole(['admin']),addEmployee);
 app.get("/searchemp",verifyToken, checkRole(['admin']),getEmpByField);
 app.get("/employee",verifyToken, checkRole(['admin']),getAllEmp);
 app.patch("/employee",verifyToken, checkRole(['admin']),updateEmp);
@@ -196,7 +196,7 @@ app.patch("/updatesalary",verifyToken, checkRole(['admin']),updateSalary);
 
 
 
-app.post("/payIn",addPayIn);
+app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
 app.get("/payInBtnDate",verifyToken, checkRole(['admin']),getPayInBtnDate);
@@ -236,10 +236,7 @@ app.post("/admin",verifyToken, checkRole(['superadmin']),(req,res)=>{
   registerUser(req,res,role);
 });
 
-app.post("/superadmin",(req,res)=>{
-  const role ="superadmin";
-  registerUser(req,res,role);
-});
+
 
 app.post("/login",loginUser);
 
