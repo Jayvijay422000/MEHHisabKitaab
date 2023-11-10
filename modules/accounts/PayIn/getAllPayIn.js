@@ -4,22 +4,22 @@ const getAllPayIn = async (req, res) => {
 
     try {
 
-        const pipeline = [
-            {
-              $skip: req.pagination.startIndex
-            },
-            {
-              $limit:req.pagination.limit
-            },
-            {
-                $sort: {
-                    _id: -1 // 1 for ascending, -1 for descending
-                }
-              }
+        // const pipeline = [
+        //     {
+        //       $skip: req.pagination.startIndex
+        //     },
+        //     {
+        //       $limit:req.pagination.limit
+        //     },
+        //     {
+        //         $sort: {
+        //             _id: -1 // 1 for ascending, -1 for descending
+        //         }
+        //       }
            
-          ];
+        //   ];
     
-        const result = await payInModel.aggregate(pipeline);;
+        const result = await payInModel.find().sort({_id: -1});
 
         if (!result) {
 
