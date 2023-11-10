@@ -81,8 +81,8 @@ const getWishFieldOfReferenceUser = require("./modules/referenceUser/getWishFiel
 //const paginationMiddleware = require("./modules/middleware/paginationMiddleware")
 
 
-const rateLimitMiddleware =require("./modules/middleware/ratelimitMiddleware");
-app.use(rateLimitMiddleware);
+// const rateLimitMiddleware =require("./modules/middleware/ratelimitMiddleware");
+// app.use(rateLimitMiddleware);
 
 
 // Middleware for verifying JWT tokens
