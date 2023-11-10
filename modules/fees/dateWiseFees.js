@@ -67,7 +67,7 @@ const dateWiseFees = async (req, res) => {
 
 
 
-                }).select("full_name course_details mobile_number").limit(req.pagination.limit).skip(req.pagination.startIndex);
+                }).select("full_name course_details mobile_number");
 
             if (feesList.length < 1) {
 
