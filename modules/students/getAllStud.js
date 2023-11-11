@@ -7,7 +7,14 @@ const getAllStud = async(req,res)=>{
     try {
         
        
-        const stud = await studmodel.find().sort({_id: -1});
+        //const stud = await studmodel.find().sort({_id: -1});
+        const stud = await studmodel.aggregate([{"$lookup":{
+            "from":"referenceUser",
+            "localField":"refId",
+            "foreignField":"_id",
+            "as":"reference User"
+            
+        }}])
 
         if(!stud){
             res.status(404).send({status: 404, message: "No Data Found", data: []});
