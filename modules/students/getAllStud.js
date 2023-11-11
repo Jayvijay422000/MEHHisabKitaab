@@ -14,7 +14,24 @@ const getAllStud = async(req,res)=>{
             "foreignField":"_id",
             "as":"reference User"
             
-        }}])
+        }},{
+            $project: {
+              "_id": 1,
+              "active": 1,
+              "full_name": 1,
+              "mobile_number": 1,
+              "email": 1,
+              "address": 1,
+              "qualification": 1,
+              "dob": 1,
+              "pincode": 1,
+              "personal_doc": 1,
+              "course_details": 1,
+              "updatedAt": 1,
+              "refId": 1,
+              "reference User.full_name": 1
+            }
+          }])
 
         if(!stud){
             res.status(404).send({status: 404, message: "No Data Found", data: []});
