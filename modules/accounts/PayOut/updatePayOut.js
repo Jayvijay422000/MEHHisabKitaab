@@ -12,7 +12,7 @@ const updatePayOut = async(req,res)=>{
             { new: true } //if true then it returns the updated data
           );
         if(!updatePayOut){
-            res.status(404).send({status:404,message:"No Such User Exist",data: null});
+            res.status(404).send({status:404,message:"No Such Data Exists",data: null});
 
         }else{
             res.status(200).send({status:200,message:"Successfully Updated",data:updatePayOut});

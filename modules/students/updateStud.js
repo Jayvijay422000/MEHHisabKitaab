@@ -26,4 +26,4 @@ const updateStud= async(req,res)=>{
 
 }
 
-module.exports=updateStud;
+module.exports=updateStud; 

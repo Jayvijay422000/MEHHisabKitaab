@@ -16,7 +16,6 @@ const loginUser = async (req, res) => {
 
 
         const user = await userModel.findOne({ "email": email });
-
         if (!user || !comparePassword(password, user.password)) {
             return  res.status(401).send({ status: 401,message: "Authentication failed", data: null });
            

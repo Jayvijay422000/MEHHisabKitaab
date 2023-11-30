@@ -3,9 +3,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const cors = require('cors');
-app.use(cors());
 
+
+const cors = require('cors');
+app.use(cors({origin: true, credentials: true}));
 
 
 const jwt = require('jsonwebtoken');
@@ -150,8 +151,10 @@ const upload = multer({
 
 /**************** fees routes ****************/
 
+
 app.get("/feesByCourse",verifyToken, checkRole(['admin']),courseWiseFees);
 app.get("/feesByDate",verifyToken, checkRole(['admin']),dateWiseFees)
+
 
 
 /**************** student routes ****************/
@@ -171,14 +174,11 @@ app.get("/course/:id",verifyToken, checkRole(['admin']),getByIdCourses);
 
 /**************** referenceUser ****************/
 
-
-
 app.post("/refUser",verifyToken, checkRole(['admin','staff']),addReferenceUser);
 app.get("/searchRefUser",verifyToken, checkRole(['admin','staff']),getReferenceUserByField);
 app.get("/refUser",verifyToken, checkRole(['admin','staff']),getAllReferenceUser);
 app.patch("/refUser",verifyToken, checkRole(['admin','staff']),updateReferenceUser);
 app.get("/wishFieldRefUser",verifyToken, checkRole(['admin','staff']),getWishFieldOfReferenceUser);
-
 
 /**************** employees ****************/
 
@@ -196,6 +196,7 @@ app.patch("/updatesalary",verifyToken, checkRole(['admin']),updateSalary);
 
 
 
+
 app.post("/payIn",verifyToken, checkRole(['admin']),addPayIn);
 app.get("/payIn",verifyToken, checkRole(['admin']),getAllPayIn);
 //between to date
@@ -204,13 +205,16 @@ app.path("/updatePayIn",verifyToken, checkRole(['admin']),updatePayIn);
 
 
 
+
 /****************payOut****************/
 
 app.post("/payOut",verifyToken, checkRole(['admin']),addPayOut);
 app.get("/payOut",verifyToken, checkRole(['admin']),getAllPayOut);
 //between to date
+
 app.get("/payOutBtnDate",verifyToken, checkRole(['admin']),getPayOutBtnDate);
 app.path("/updatePayOut",verifyToken, checkRole(['admin']),updatePayOut);
+
 
 
 /**************** User ****************/
