@@ -12,11 +12,11 @@ const getPayOutBtnDate = async (req, res) => {
                 $gte: new Date(startDate),
                 $lte: new Date(endDate)
             }
-        }).sort({_id: -1});
+        }).sort({ _id: -1 });
         res.status(200).send({ status: 200, message: "successfully Found", data: result });
 
     } catch (error) {
-        res.status(500).send({ status: 500, message: error.message, data: null });
+        res.status(500).send({ status: 500, message: "Internal Server Error", data: null });
 
     }
 }

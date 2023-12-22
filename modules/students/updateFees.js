@@ -38,8 +38,8 @@ const updateFees = async (req, res) => {
       { "inner._id": installmentId }
     ];
 
-    const updateStud = await studmodel.findOneAndUpdate(filter, update, { arrayFilters },{ new: true });
-    
+    const updateStud = await studmodel.findOneAndUpdate(filter, update, { arrayFilters }, { new: true });
+
     // const updateStud=await studmodel.findOne( { 
     //         _id:  studId, 
     //         active: true, 
@@ -58,7 +58,7 @@ const updateFees = async (req, res) => {
     }
 
   } catch (error) {
-    res.status(500).json({ status: 500, message: error.message, data: null })
+    res.status(500).json({ status: 500, message: "Internal Server Error", data: null })
   }
 
 }

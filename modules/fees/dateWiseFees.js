@@ -69,7 +69,7 @@ const dateWiseFees = async (req, res) => {
 
                 }).select("full_name course_details mobile_number");
 
-            if (feesList.length < 1) {
+            if (feesList.length <= 0) {
 
                 res.status(404).send({ status: 404, message: "No Data Found", data: null });
 
@@ -85,7 +85,7 @@ const dateWiseFees = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).send({ status: 500, message: error.message, data: null });
+        res.status(500).send({ status: 500, message: "Internal Server Error", data: null });
 
     }
 }

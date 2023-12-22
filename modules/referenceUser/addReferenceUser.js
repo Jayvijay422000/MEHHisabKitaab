@@ -1,7 +1,7 @@
 const referenceUserModel = require("../../models/reference/referenceUserSchema")
 
 
-const addReferenceUser = async(req,res)=>{
+const addReferenceUser = async (req, res) => {
 
     try {
 
@@ -9,9 +9,9 @@ const addReferenceUser = async(req,res)=>{
         const { fullName, mobileNumber, email, address, dob } = req.body;
 
 
-        const existsRefUser = await referenceUserModel.findOne({ email: email , mobile_number:mobileNumber});
+        const existsRefUser = await referenceUserModel.findOne({ email: email, mobile_number: mobileNumber });
 
-        
+
         if (existsRefUser) {
             res.status(403).send({
                 status: 403, message: "Reference User already exists", data: null
@@ -21,7 +21,7 @@ const addReferenceUser = async(req,res)=>{
 
             const refUser = new referenceUserModel({
                 full_name: fullName, mobile_number: mobileNumber, email: email,
-                address: address,dob: dob,created_by: req.userId
+                address: address, dob: dob, created_by: req.userId
             })
             await refUser.save()
             res.status(201).send({
@@ -29,13 +29,13 @@ const addReferenceUser = async(req,res)=>{
             });
 
         }
-        
+
     } catch (error) {
-        
+
         res.status(500).send({
-            status: 500, message: error.message, data: null
+            status: 500, message: "Internal Server Error", data: null
         });
     }
 }
 
-module.exports=addReferenceUser;
+module.exports = addReferenceUser;
