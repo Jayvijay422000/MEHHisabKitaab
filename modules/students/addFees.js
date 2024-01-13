@@ -21,10 +21,10 @@ const addFees = async (req, res) => {
         const { studId, newFees, course_id } = req.body;
 
         const updateStud = await studmodel.findOneAndUpdate(
-            { _id:studId,active:true, "course_details.course_id":new mongoose.Types.ObjectId(course_id)},
-            { $push: {"course_details.$.fees_installments":newFees}}, // Dynamically set all fields from req.body
+            { _id: studId, active: true, "course_details.course_id": new mongoose.Types.ObjectId(course_id) },
+            { $push: { "course_details.$.fees_installments": newFees } }, // Dynamically set all fields from req.body
             { new: true }
-          );
+        );
 
         if (!updateStud) {
             res.status(404).send({ status: 404, message: "No Such User Exist", data: null });
@@ -35,7 +35,7 @@ const addFees = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send({ status: 500, message: error.message, data: null });
+        res.status(500).send({ status: 500, message: "Internal Server Error", data: null });
 
     }
 

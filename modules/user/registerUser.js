@@ -28,7 +28,8 @@ const registerUser = async (req, res, role) => {
 
         let emailMobileNotRegistered = await validateUserEmailAndMobile(email, mobile_number);
         if (!emailMobileNotRegistered) {
-            return res.status(403).json({ status: 403,
+            return res.status(403).json({
+                status: 403,
                 message: 'Email or Mobile Number is already Registered',
                 data: null
             })
@@ -63,7 +64,7 @@ const registerUser = async (req, res, role) => {
 
     } catch (error) {
 
-        res.status(500).send({ status: 500, message: error.message, data: null });
+        res.status(500).send({ status: 500, message: "Internal Server Error", data: null });
     }
 
 }
