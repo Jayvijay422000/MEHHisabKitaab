@@ -188,8 +188,10 @@ app.patch("/updatesalary", verifyToken, checkRole(['admin']), updateSalary);
 app.post("/payIn", verifyToken, checkRole(['admin']), addPayIn);
 app.get("/payIn", verifyToken, checkRole(['admin']), getAllPayIn);
 //between to date
+
 app.get("/payInBtnDate", verifyToken, checkRole(['admin']), getPayInBtnDate);
 app.patch("/updatePayIn", verifyToken, checkRole(['admin']), updatePayIn);
+
 
 
 
@@ -200,8 +202,10 @@ app.post("/payOut", verifyToken, checkRole(['admin']), addPayOut);
 app.get("/payOut", verifyToken, checkRole(['admin']), getAllPayOut);
 //between to date
 
+
 app.get("/payOutBtnDate", verifyToken, checkRole(['admin']), getPayOutBtnDate);
 app.patch("/updatePayOut", verifyToken, checkRole(['admin']), updatePayOut);
+
 
 
 
