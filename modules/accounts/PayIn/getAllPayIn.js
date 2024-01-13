@@ -3,7 +3,7 @@ const payInModel = require("../../../models/accounts/payInSchema");
 const getAllPayIn = async (req, res) => {
 
     try {
-       //  const page = req.query.page || 1;
+         const page = req.query.page || 1;
         // console.log(page)
         // const pipeline = [
         //     {
@@ -20,7 +20,7 @@ const getAllPayIn = async (req, res) => {
            
         //   ];
         //const limit = 3
-        const result = await payInModel.find()//.limit(limit).skip(limit * page).sort({ _id: -1 });
+        const result = await payInModel.find().limit(limit).skip(limit * page).sort({ _id: -1 });
         const count = await payInModel.find({}).count();
 
         if (result > 0) {
@@ -28,7 +28,7 @@ const getAllPayIn = async (req, res) => {
             res.status(404).send({ status: 404, message: "No Data Found", data: null });
 
         } else {
-            res.status(200).send({ status: 200, message: "successfully Found", data: result});
+            res.status(200).send({ status: 200, message: "successfully Found", data: result, count: count});
         }
 
     } catch (error) {
