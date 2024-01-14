@@ -74,7 +74,7 @@ const getReferenceUserByField = require("./modules/referenceUser/getReferenceUse
 const getWishFieldOfReferenceUser = require("./modules/referenceUser/getWishFieldOfReferenceUser");
 
 //MiddleWare
-//const paginationMiddleware = require("./modules/middleware/paginationMiddleware")
+const paginationMiddleware = require("./modules/middleware/paginationMiddleware")
 // const rateLimitMiddleware =require("./modules/middleware/ratelimitMiddleware");
 // app.use(rateLimitMiddleware);
 // Middleware for verifying JWT tokens
@@ -185,7 +185,7 @@ app.patch("/updatesalary", verifyToken, checkRole(['admin']), updateSalary);
 
 
 
-app.post("/payIn", verifyToken, checkRole(['admin']), addPayIn);
+app.post("/payIn", verifyToken,paginationMiddleware(8), checkRole(['admin']), addPayIn);
 app.get("/payIn", verifyToken, checkRole(['admin']), getAllPayIn);
 //between to date
 
