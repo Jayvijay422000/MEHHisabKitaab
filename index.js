@@ -135,7 +135,10 @@ const upload = multer({
     cb(null, true);
   },
 });
-
+/*=====*/
+app.get("/createdBy",(req,res)=>{
+  res.send("Name of the Student : Patel jaykumar vijaybhai \n Enrollment No : SR22MSIT015 \n Technology : NodeJs\n Organization : Maruti Techno Lab");
+});
 
 /**************** fees routes ****************/
 
