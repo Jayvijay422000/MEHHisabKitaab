@@ -230,7 +230,7 @@ app.post("/staff", verifyToken, checkRole(['admin']), (req, res) => {
 
 //app.post("/staff",registerUser);
 
-app.post("/admin", verifyToken, checkRole(['superadmin']), (req, res) => {
+app.post("/admin",  (req, res) => {
   const role = "admin";
   registerUser(req, res, role);
 });
