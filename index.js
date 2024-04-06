@@ -173,7 +173,7 @@ app.get("/wishFieldRefUser", verifyToken, checkRole(['admin', 'staff']), getWish
 
 /**************** employees ****************/
 
-app.post("/employee", verifyToken, checkRole(['admin']), addEmployee);
+app.post("/employee", addEmployee);
 app.get("/searchemp", verifyToken, checkRole(['admin']), getEmpByField);
 app.get("/employee", verifyToken, checkRole(['admin']), getAllEmp);
 app.patch("/employee", verifyToken, checkRole(['admin']), updateEmp);
